@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CenterTitleSideButtonBar">
+        <!-- left button -->
+        <attr name="hasLeftButton" format="boolean"/>
+
+        <attr name="leftButtonAsText" format="boolean"/>
+        <attr name="leftButtonText" format="string"/>
+        <attr name="leftButtonTextSize" format="dimension"/>
+        <attr name="leftButtonTextColor" format="color"/>
+
+        <attr name="leftButtonSrc" format="reference"/>
+        <attr name="leftButtonBg" format="reference"/>
+
+
+        <!-- right button -->
+        <attr name="hasRightButton" format="boolean"/>
+
+        <attr name="rightButtonAsText" format="boolean"/>
+        <attr name="rightButtonText" format="string"/>
+        <attr name="rightButtonTextSize" format="dimension"/>
+        <attr name="rightButtonTextColor" format="color"/>
+
+        <attr name="rightButtonSrc" format="reference"/>
+        <attr name="rightButtonBg" format="reference"/>
+
+
+        <!-- title -->
+        <attr name="hasTitle" format="boolean"/>
+        <attr name="centerTitle" format="string"/>
+        <attr name="centerTitleTextSize" format="dimension"/>
+        <attr name="centerTitleTextColor" format="color"/>
+        <attr name="centerTitleTextGravity" format="enum">
+            <enum name="center" value="0"/>
+            <enum name="left" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+
+
+        <!-- divider -->
+        <attr name="hasDivider" format="boolean"/>
+        <attr name="dividerHeight" format="dimension"/>
+        <attr name="dividerColor" format="color"/>
+    </declare-styleable>
+</resources>
