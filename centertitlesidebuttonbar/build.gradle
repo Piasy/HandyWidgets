@@ -4,8 +4,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
-def publishVersionName = '1.0.0'
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
@@ -14,7 +12,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName publishVersionName
+        versionName rootProject.ext.releaseVersion
     }
     buildTypes {
         release {

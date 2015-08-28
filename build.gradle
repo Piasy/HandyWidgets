@@ -17,7 +17,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        mavenLocal()
         maven {
             url  "http://dl.bintray.com/piasy/maven"
         }
@@ -26,7 +25,7 @@ allprojects {
 
 ext {
     groupName = 'com.github.piasy'
-    releaseVersion = "0.0.1"
+    releaseVersion = "0.0.2"
     compileSdkVersion = 23
     buildToolsVersion = '23.0.0'
     targetSdkVersion = 23
