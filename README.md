@@ -64,3 +64,5 @@ In Java code:
         }
     });
 ```
++  Screenshot  
+![Screenshot_centertitlesidebuttonbar.png](art/Screenshot_centertitlesidebuttonbar.png)
