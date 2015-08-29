@@ -3,14 +3,15 @@ Handy Android widgets.
 
 ##CenterTitleSideButtonBar
 [ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion)  
-Title bar with center title TextView, side(left & right) button and bottom divider.  
+Title bar with center title TextView, side(left & right) button and bottom divider.
 Allow fully customization against the title bar. No more Google/StackOverFlow search for customize ActionBar/Toolbar again!
-+  Download  
+
++  Screenshot  
+![Screenshot_centertitlesidebuttonbar.jpg](art/Screenshot_centertitlesidebuttonbar.jpg)
++  Download
 ```groovy
     repositories {
-        maven {
-            url  "http://dl.bintray.com/piasy/maven"
-        }
+        jcenter()
     }
 
     dependencies {
@@ -53,16 +54,16 @@ In xml layout file:
 ```
 In Java code:
 ```java
-    CenterTitleSideButtonBar titleBar = (CenterTitleSideButtonBar) findViewById(R.id.mTitleBar);
-    titleBar.showRightButton();
-    titleBar.setLeftButtonOnClickListener(new View.OnClickListener() {
+    CenterTitleSideButtonBar mTitleBarFull = (CenterTitleSideButtonBar) findViewById(R.id.mTitleBarFull);
+    mTitleBarFull.showRightButton();
+    mTitleBarFull.setLeftButtonOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Toast.makeText(MainActivity.this, "Left Button Clicked 1", Toast.LENGTH_SHORT)
                     .show();
         }
     });
-    titleBar.setRightButtonOnClickListener(new View.OnClickListener() {
+    mTitleBarFull.setRightButtonOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Toast.makeText(MainActivity.this, "Right Button Clicked 1", Toast.LENGTH_SHORT)
@@ -81,9 +82,7 @@ In Java code:
   +  centerTitleTextSize/centerTitleTextColor/centerTitleTextGravity (gravity values are: left, right, center)
   +  dividerHeight/dividerColor
   +  leftButtonId/rightButtonId/titleId/dividerId (to align title to left/right, the button id must be set if the side button exist, and with the view ids, you can retrieve these views and do more customization as you can imagine)
-  +  and more... 
-+  Screenshot  
-![Screenshot_centertitlesidebuttonbar.jpg](art/Screenshot_centertitlesidebuttonbar.jpg)
+  +  and more...
 +  Todo
   +  shadow/elevation
   +  search bar
