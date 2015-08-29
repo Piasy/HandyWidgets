@@ -4,6 +4,8 @@
         <!-- left button -->
         <attr name="hasLeftButton" format="boolean"/>
 
+        <attr name="leftButtonId" format="reference"/>
+        <attr name="leftButtonShownDefault" format="boolean"/>
         <attr name="leftButtonAsText" format="boolean"/>
         <attr name="leftButtonText" format="string"/>
         <attr name="leftButtonTextSize" format="dimension"/>
@@ -16,6 +18,8 @@
         <!-- right button -->
         <attr name="hasRightButton" format="boolean"/>
 
+        <attr name="rightButtonId" format="reference"/>
+        <attr name="rightButtonShownDefault" format="boolean"/>
         <attr name="rightButtonAsText" format="boolean"/>
         <attr name="rightButtonText" format="string"/>
         <attr name="rightButtonTextSize" format="dimension"/>
@@ -27,6 +31,7 @@
 
         <!-- title -->
         <attr name="hasTitle" format="boolean"/>
+        <attr name="titleId" format="reference"/>
         <attr name="centerTitle" format="string"/>
         <attr name="centerTitleTextSize" format="dimension"/>
         <attr name="centerTitleTextColor" format="color"/>
@@ -39,6 +44,7 @@
 
         <!-- divider -->
         <attr name="hasDivider" format="boolean"/>
+        <attr name="dividerId" format="reference"/>
         <attr name="dividerHeight" format="dimension"/>
         <attr name="dividerColor" format="color"/>
     </declare-styleable>

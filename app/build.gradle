@@ -22,5 +22,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.github.piasy:centertitlesidebuttonbar:0.0.2'
+    //compile "com.github.piasy:centertitlesidebuttonbar:${rootProject.ext.releaseVersion}"
+    compile project(":centertitlesidebuttonbar")
+
+    compile 'com.jakewharton:butterknife:7.0.1'
 }
