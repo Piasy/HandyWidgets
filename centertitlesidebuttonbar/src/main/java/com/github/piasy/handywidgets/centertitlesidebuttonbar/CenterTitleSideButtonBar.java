@@ -8,6 +8,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,8 +109,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         mLeftButtonTextColor =
                 a.getColorStateList(R.styleable.CenterTitleSideButtonBar_leftButtonTextColor);
         mLeftButtonTextSize =
-                a.getDimensionPixelSize(R.styleable.CenterTitleSideButtonBar_leftButtonTextSize,
-                        20);
+                (int) a.getDimension(R.styleable.CenterTitleSideButtonBar_leftButtonTextSize, 20);
         mLeftButtonSrc = a.getResourceId(R.styleable.CenterTitleSideButtonBar_leftButtonSrc, 0);
         mLeftButtonBg = a.getResourceId(R.styleable.CenterTitleSideButtonBar_leftButtonBg, 0);
 
@@ -123,8 +123,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         mRightButtonTextColor =
                 a.getColorStateList(R.styleable.CenterTitleSideButtonBar_rightButtonTextColor);
         mRightButtonTextSize =
-                a.getDimensionPixelSize(R.styleable.CenterTitleSideButtonBar_rightButtonTextSize,
-                        20);
+                (int) a.getDimension(R.styleable.CenterTitleSideButtonBar_rightButtonTextSize, 20);
         mRightButtonSrc = a.getResourceId(R.styleable.CenterTitleSideButtonBar_rightButtonSrc, 0);
         mRightButtonBg = a.getResourceId(R.styleable.CenterTitleSideButtonBar_rightButtonBg, 0);
 
@@ -134,8 +133,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         mTitleColor =
                 a.getColor(R.styleable.CenterTitleSideButtonBar_centerTitleTextColor, 0xFF333333);
         mTitleSize =
-                a.getDimensionPixelSize(R.styleable.CenterTitleSideButtonBar_centerTitleTextSize,
-                        20);
+                (int) a.getDimension(R.styleable.CenterTitleSideButtonBar_centerTitleTextSize, 20);
         mTitleGravity =
                 a.getInteger(R.styleable.CenterTitleSideButtonBar_centerTitleTextGravity, 0);
 
@@ -175,7 +173,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 if (mLeftButtonTextColor != null) {
                     mLeftButton.setTextColor(mLeftButtonTextColor);
                 }
-                mLeftButton.setTextSize(mLeftButtonTextSize);
+                mLeftButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLeftButtonTextSize);
                 mLeftButton.setOnClickListener(this);
                 if (!mLeftButtonShownDefault) {
                     mLeftButton.setVisibility(INVISIBLE);
@@ -225,7 +223,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 if (mRightButtonTextColor != null) {
                     mRightButton.setTextColor(mRightButtonTextColor);
                 }
-                mRightButton.setTextSize(mRightButtonTextSize);
+                mRightButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightButtonTextSize);
                 mRightButton.setOnClickListener(this);
                 if (!mRightButtonShownDefault) {
                     mRightButton.setVisibility(INVISIBLE);
@@ -282,7 +280,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
             }
             mTitleTextView.setLayoutParams(params);
             mTitleTextView.setText(mTitle);
-            mTitleTextView.setTextSize(mTitleSize);
+            mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleSize);
             mTitleTextView.setTextColor(mTitleColor);
             if (mTitleGravity == 1 && ((mLeftButton == null && mLeftImageButton == null) ||
                     ((mLeftButton != null || mLeftImageButton != null) && mLeftButtonId != -1))) {

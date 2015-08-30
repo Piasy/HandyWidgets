@@ -22,7 +22,7 @@ allprojects {
 
 ext {
     groupName = 'com.github.piasy'
-    releaseVersion = "0.1.0"
+    releaseVersion = "0.1.1"
     compileSdkVersion = 23
     buildToolsVersion = '23.0.0'
     targetSdkVersion = 23
