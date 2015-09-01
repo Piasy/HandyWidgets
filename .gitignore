@@ -6,5 +6,6 @@
 /build
 /captures
 
-/idea
+/.idea
 *.iml
+bintray.properties
