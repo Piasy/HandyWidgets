@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@android:color/white"
+        >
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/animate_with_standard_api"
+            android:textSize="20sp"
+            />
+    <ImageView
+            android:id="@+id/mIvLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:scaleType="center"
+            android:layout_marginLeft="-150dp"
+            android:layout_marginRight="-150dp"
+            android:src="@drawable/iv_loading_long"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/animate_with_endless_moving_view"
+            android:textSize="20sp"
+            />
+
+    <com.github.piasy.handywidgets.endlessmovingview.EndlessMovingBitmapView
+            android:id="@+id/mEndlessMovingViewLeft"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:movingDir="left"
+            app:movingSpeed="2"
+            app:paintColor="@android:color/holo_blue_bright"
+            app:paintStyle="fill"
+            app:singlePeriodBitmap="@drawable/iv_loading"
+            app:stopWhenLoseFocus="false"
+            app:autoStart="true"
+            />
+
+</LinearLayout>

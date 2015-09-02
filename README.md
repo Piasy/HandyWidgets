@@ -14,7 +14,7 @@ Allow fully customization against the title bar. No more Google/StackOverFlow se
     }
 
     dependencies {
-        compile 'com.github.piasy:centertitlesidebuttonbar:${latest version}'
+        compile "com.github.piasy:centertitlesidebuttonbar:${latest version}"
     }
 ```
 
@@ -29,6 +29,6 @@ A handy view that support endless moving a drawable(image, xml drawable), or a c
     }
 
     dependencies {
-        compile 'com.github.piasy:endlessmovingview:${latest version}'
+        compile "com.github.piasy:endlessmovingview:${latest version}"
     }
 ```

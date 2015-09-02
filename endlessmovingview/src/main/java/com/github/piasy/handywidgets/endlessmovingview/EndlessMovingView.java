@@ -39,7 +39,7 @@ public abstract class EndlessMovingView extends View {
 
     @IntDef(value = { Dir.LEFT, Dir.UP, Dir.RIGHT, Dir.DOWN })
     @Retention(RetentionPolicy.SOURCE)
-    @interface MovingDir {}
+    public @interface MovingDir {}
 
     /**
      * Paint style
@@ -52,25 +52,25 @@ public abstract class EndlessMovingView extends View {
 
     @IntDef(value = { Style.FILL, Style.STROKE, Style.FILL_AND_STROKE })
     @Retention(RetentionPolicy.SOURCE)
-    @interface PaintStyle {}
+    public @interface PaintStyle {}
 
     private final Paint mPaint;
     private final RefreshRunnable mRefreshRunnable;
     private boolean isAnimating = false;
 
-    protected final boolean isAutoStart;
-    protected final boolean isStopWhenLoseFocus;
-    protected final
+    private final boolean isAutoStart;
+    private final boolean isStopWhenLoseFocus;
+    private final
     @MovingDir
     int mMovingDir;
-    protected final int mMovingSpeed;
+    private final int mMovingSpeed;
     protected final
     @DrawableRes
     int mPic2DrawRes;
-    protected final
+    private final
     @ColorInt
     int mPaintColor;
-    protected final
+    private final
     @PaintStyle
     int mPaintStyle;
 
@@ -143,16 +143,23 @@ public abstract class EndlessMovingView extends View {
         setLayerType(LAYER_TYPE_HARDWARE, mPaint);
     }
 
-    protected int mCurOffset = 0;
-    protected int mSinglePeriodGraphWidth = 0;
-    protected int mSinglePeriodGraphHeight = 0;
+    private int mCurOffset = 0;
+    private int mSinglePeriodGraphWidth = 0;
+    private int mSinglePeriodGraphHeight = 0;
 
     /**
-     * init move state like {@link #mCurOffset}, {@link #mSinglePeriodGraphWidth}, {@link
-     * #mSinglePeriodGraphHeight}
-     */
-    protected abstract void initMoveState(@MovingDir int movingDir, int minX, int maxX, int minY,
-            int maxY);
+     * get single period graph width
+     *
+     * @return the width of the single period graph
+     * */
+    protected abstract int getSinglePeriodGraphWidth();
+
+    /**
+     * get single period graph height
+     *
+     * @return the height of the single period graph
+     * */
+    protected abstract int getSinglePeriodGraphHeight();
 
     private int mMaxX = 0;
     private int mMaxY = 0;
@@ -160,7 +167,22 @@ public abstract class EndlessMovingView extends View {
     private void init() {
         mMaxX = getWidth();
         mMaxY = getHeight();
-        initMoveState(mMovingDir, 0, mMaxX, 0, mMaxY);
+        mSinglePeriodGraphHeight = getSinglePeriodGraphHeight();
+        mSinglePeriodGraphWidth = getSinglePeriodGraphWidth();
+        switch (mMovingDir) {
+            case Dir.LEFT:
+                mCurOffset = mMaxX;
+                break;
+            case Dir.UP:
+                mCurOffset = mMaxY;
+                break;
+            case Dir.RIGHT:
+                mCurOffset = 0 - mSinglePeriodGraphWidth;
+                break;
+            case Dir.DOWN:
+                mCurOffset = 0 - mSinglePeriodGraphHeight;
+                break;
+        }
         isInitiated = true;
     }
 
@@ -206,7 +228,6 @@ public abstract class EndlessMovingView extends View {
         isAnimating = false;
     }
 
-
     private boolean isInitiated = false;
 
     /**
@@ -218,9 +239,9 @@ public abstract class EndlessMovingView extends View {
 
         if (isInitiated) {
             int start = mCurOffset;
-            while (hasNextPeriod(mMovingDir, start, mSinglePeriodGraphWidth, mSinglePeriodGraphHeight,
-                    0, mMaxX, 0, mMaxY)) {
-                draw(canvas, mPaint, mMovingDir, start);
+            while (hasNextPeriod(mMovingDir, start, mSinglePeriodGraphWidth,
+                    mSinglePeriodGraphHeight, 0, mMaxX, 0, mMaxY)) {
+                draw(canvas, mPaint, mMovingDir, start, 0, mMaxX, 0, mMaxY);
                 start = move2NextPeriod(mMovingDir, start, mSinglePeriodGraphWidth,
                         mSinglePeriodGraphHeight, 0, mMaxX, 0, mMaxY);
             }
@@ -241,8 +262,37 @@ public abstract class EndlessMovingView extends View {
      * @param maxY the max y coordinate of this view, always the height
      * @return return the new offset according to movingDir, movingSpeed and view bounds
      */
-    protected abstract int move(int curOffset, @MovingDir int movingDir, int movingSpeed, int minX,
-            int maxX, int minY, int maxY);
+    protected int move(int curOffset, @MovingDir int movingDir, int movingSpeed, int minX, int maxX,
+            int minY, int maxY) {
+        switch (movingDir) {
+            case Dir.LEFT:
+                if (curOffset > maxX - mSinglePeriodGraphWidth) {
+                    return curOffset - movingSpeed;
+                } else {
+                    return maxX;
+                }
+            case Dir.UP:
+                if (curOffset > maxY - mSinglePeriodGraphHeight) {
+                    return curOffset - movingSpeed;
+                } else {
+                    return maxY;
+                }
+            case Dir.RIGHT:
+                if (curOffset < minX) {
+                    return curOffset + movingSpeed;
+                } else {
+                    return minX - mSinglePeriodGraphWidth;
+                }
+            case Dir.DOWN:
+                if (curOffset < minY) {
+                    return curOffset + movingSpeed;
+                } else {
+                    return minY - mSinglePeriodGraphHeight;
+                }
+            default:
+                return 0;
+        }
+    }
 
     /**
      * draw one single period graph at the start position, according to the moving direction
@@ -251,8 +301,13 @@ public abstract class EndlessMovingView extends View {
      * @param paint the paint to draw the single period graph
      * @param movingDir moving direction
      * @param start start position of this period graph, left or top
+     * @param minX the min x coordinate of this view, always 0
+     * @param maxX the max x coordinate of this view, always the width
+     * @param minY the min y coordinate of this view, always 0
+     * @param maxY the max y coordinate of this view, always the height
      */
-    protected abstract void draw(Canvas canvas, Paint paint, @MovingDir int movingDir, int start);
+    protected abstract void draw(Canvas canvas, Paint paint, @MovingDir int movingDir, int start,
+            int minX, int maxX, int minY, int maxY);
 
     /**
      * check if still need to draw a next period graph
@@ -267,9 +322,21 @@ public abstract class EndlessMovingView extends View {
      * @param maxY the max y coordinate of this view, always the height
      * @return {@code true} if still need to draw a next period graph
      */
-    protected abstract boolean hasNextPeriod(@MovingDir int movingDir, int start,
-            int singlePeriodGraphWidth, int singlePeriodGraphHeight, int minX, int maxX, int minY,
-            int maxY);
+    protected boolean hasNextPeriod(@MovingDir int movingDir, int start, int singlePeriodGraphWidth,
+            int singlePeriodGraphHeight, int minX, int maxX, int minY, int maxY) {
+        switch (movingDir) {
+            case Dir.LEFT:
+                return start >= -singlePeriodGraphWidth;
+            case Dir.RIGHT:
+                return start <= maxX;
+            case Dir.UP:
+                return start >= -singlePeriodGraphHeight;
+            case Dir.DOWN:
+                return start <= maxY;
+            default:
+                return false;
+        }
+    }
 
     /**
      * move the start position to next period graph
@@ -284,9 +351,21 @@ public abstract class EndlessMovingView extends View {
      * @param maxY the max y coordinate of this view, always the height
      * @return return the new start position of the next period graph
      */
-    protected abstract int move2NextPeriod(@MovingDir int movingDir, int start,
-            int singlePeriodGraphWidth, int singlePeriodGraphHeight, int minX, int maxX, int minY,
-            int maxY);
+    protected int move2NextPeriod(@MovingDir int movingDir, int start, int singlePeriodGraphWidth,
+            int singlePeriodGraphHeight, int minX, int maxX, int minY, int maxY) {
+        switch (movingDir) {
+            case Dir.LEFT:
+                return start - singlePeriodGraphWidth;
+            case Dir.RIGHT:
+                return start + singlePeriodGraphWidth;
+            case Dir.UP:
+                return start - singlePeriodGraphHeight;
+            case Dir.DOWN:
+                return start + singlePeriodGraphHeight;
+            default:
+                return 0;
+        }
+    }
 
     private static class RefreshRunnable implements Runnable {
 

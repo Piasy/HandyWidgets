@@ -9,6 +9,9 @@ import android.util.AttributeSet;
 
 /**
  * Created by Piasy{github.com/Piasy} on 15/9/1.
+ * Set a bitmap(drawable resource) to create an endless moving view. The provided bitmap is the
+ * single period graph of the endless view.
+ * The direction & speed could be configured.
  */
 final public class EndlessMovingBitmapView extends EndlessMovingView {
     public EndlessMovingBitmapView(Context context) {
@@ -30,60 +33,18 @@ final public class EndlessMovingBitmapView extends EndlessMovingView {
     }
 
     @Override
-    protected void initMoveState(@MovingDir int movingDir, int minX, int maxX, int minY, int maxY) {
-        mSinglePeriodGraphWidth = mPic2Draw.getWidth();
-        mSinglePeriodGraphHeight = mPic2Draw.getHeight();
-        switch (mMovingDir) {
-            case Dir.LEFT:
-                mCurOffset = maxX;
-                break;
-            case Dir.UP:
-                mCurOffset = maxY;
-                break;
-            case Dir.RIGHT:
-                mCurOffset = minX - mSinglePeriodGraphWidth;
-                break;
-            case Dir.DOWN:
-                mCurOffset = minY - mSinglePeriodGraphHeight;
-                break;
-        }
+    protected int getSinglePeriodGraphWidth() {
+        return mPic2Draw.getWidth();
     }
 
     @Override
-    protected int move(int curOffset, @MovingDir int movingDir, int movingSpeed, int minX, int maxX,
-            int minY, int maxY) {
-        switch (movingDir) {
-            case Dir.LEFT:
-                if (curOffset > maxX - mSinglePeriodGraphWidth) {
-                    return curOffset - movingSpeed;
-                } else {
-                    return maxX;
-                }
-            case Dir.UP:
-                if (curOffset > maxY - mSinglePeriodGraphHeight) {
-                    return curOffset - movingSpeed;
-                } else {
-                    return maxY;
-                }
-            case Dir.RIGHT:
-                if (curOffset < minX) {
-                    return curOffset + movingSpeed;
-                } else {
-                    return minX - mSinglePeriodGraphWidth;
-                }
-            case Dir.DOWN:
-                if (curOffset < minY) {
-                    return curOffset + movingSpeed;
-                } else {
-                    return minY - mSinglePeriodGraphHeight;
-                }
-            default:
-                return 0;
-        }
+    protected int getSinglePeriodGraphHeight() {
+        return mPic2Draw.getHeight();
     }
 
     @Override
-    protected void draw(Canvas canvas, Paint paint, @MovingDir int movingDir, int start) {
+    protected void draw(Canvas canvas, Paint paint, @MovingDir int movingDir, int start, int minX,
+            int maxX, int minY, int maxY) {
         switch (movingDir) {
             case Dir.LEFT:
             case Dir.RIGHT:
@@ -93,40 +54,6 @@ final public class EndlessMovingBitmapView extends EndlessMovingView {
             case Dir.DOWN:
                 canvas.drawBitmap(mPic2Draw, 0, start, paint);
                 break;
-        }
-    }
-
-    @Override
-    protected boolean hasNextPeriod(@MovingDir int movingDir, int start, int singlePeriodGraphWidth,
-            int singlePeriodGraphHeight, int minX, int maxX, int minY, int maxY) {
-        switch (movingDir) {
-            case Dir.LEFT:
-                return start >= -singlePeriodGraphWidth;
-            case Dir.RIGHT:
-                return start <= maxX;
-            case Dir.UP:
-                return start >= -singlePeriodGraphHeight;
-            case Dir.DOWN:
-                return start <= maxY;
-            default:
-                return false;
-        }
-    }
-
-    @Override
-    protected int move2NextPeriod(@MovingDir int movingDir, int start, int singlePeriodGraphWidth,
-            int singlePeriodGraphHeight, int minX, int maxX, int minY, int maxY) {
-        switch (movingDir) {
-            case Dir.LEFT:
-                return start - singlePeriodGraphWidth;
-            case Dir.RIGHT:
-                return start + singlePeriodGraphWidth;
-            case Dir.UP:
-                return start - singlePeriodGraphHeight;
-            case Dir.DOWN:
-                return start + singlePeriodGraphHeight;
-            default:
-                return 0;
         }
     }
 }

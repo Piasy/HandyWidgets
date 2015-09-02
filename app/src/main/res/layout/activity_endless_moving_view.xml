@@ -144,4 +144,16 @@
                 />
     </LinearLayout>
 
+    <com.github.piasy.handywidgets.SimpleEndlessMovingPathView
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            app:movingDir="left"
+            app:movingSpeed="2"
+            app:paintColor="@android:color/holo_blue_bright"
+            app:paintStyle="fill"
+            app:singlePeriodBitmap="@drawable/iv_loading_vertical"
+            app:stopWhenLoseFocus="false"
+            />
+
 </LinearLayout>

@@ -26,6 +26,9 @@
                 android:name=".EndlessMovingViewActivity"
                 android:theme="@style/Base.Theme.AppCompat"
                 />
+        <activity
+                android:name=".AnimateCompareActivity"
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
     </application>
 
 </manifest>

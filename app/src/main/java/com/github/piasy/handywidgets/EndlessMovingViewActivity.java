@@ -1,5 +1,6 @@
 package com.github.piasy.handywidgets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -77,6 +78,7 @@ public class EndlessMovingViewActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, AnimateCompareActivity.class));
             return true;
         }
 
