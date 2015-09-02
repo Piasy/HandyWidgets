@@ -13,7 +13,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.ref.WeakReference;
 
 /**
  * Created by Piasy{github.com/Piasy} on 15/8/31.
@@ -76,7 +75,7 @@ public abstract class EndlessMovingView extends View {
 
     public EndlessMovingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mRefreshRunnable = new RefreshRunnable(this);
+        mRefreshRunnable = new RefreshRunnable();
         mPaint = new Paint();
 
         TypedArray a = context.getTheme()
@@ -151,14 +150,14 @@ public abstract class EndlessMovingView extends View {
      * get single period graph width
      *
      * @return the width of the single period graph
-     * */
+     */
     protected abstract int getSinglePeriodGraphWidth();
 
     /**
      * get single period graph height
      *
      * @return the height of the single period graph
-     * */
+     */
     protected abstract int getSinglePeriodGraphHeight();
 
     private int mMaxX = 0;
@@ -367,26 +366,19 @@ public abstract class EndlessMovingView extends View {
         }
     }
 
-    private static class RefreshRunnable implements Runnable {
-
-        private final WeakReference<EndlessMovingView> mView2Refresh;
-
-        private RefreshRunnable(EndlessMovingView view2Refresh) {
-            mView2Refresh = new WeakReference<>(view2Refresh);
-        }
+    private class RefreshRunnable implements Runnable {
 
         @Override
         public void run() {
-            if (mView2Refresh.get() != null) {
-                synchronized (mView2Refresh.get()) {
-                    long start = System.currentTimeMillis();
+            // no need to sync here, it will only be executed on the main thread!
+            // and with removing when the view detached from the window, the weak reference is
+            // unnecessary too
+            long start = System.currentTimeMillis();
 
-                    mView2Refresh.get().invalidate();
+            invalidate();
 
-                    long gap = 16 - (System.currentTimeMillis() - start);
-                    mView2Refresh.get().postDelayed(this, gap < 0 ? 0 : gap);
-                }
-            }
+            long gap = 16 - (System.currentTimeMillis() - start);
+            postDelayed(this, gap < 0 ? 0 : gap);
         }
     }
 
