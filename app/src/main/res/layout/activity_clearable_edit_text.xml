@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@android:color/darker_gray"
+        >
+
+
+    <com.github.piasy.handywidgets.clearableedittext.ClearableEditText
+            android:id="@+id/mClearableEditText"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/round_corner_bg"
+            app:hasSearchIcon="true"
+            app:searchIconRes="@drawable/iv_search_grey"
+            app:searchIconMarginLeft="10dp"
+            app:searchIconMarginRight="10dp"
+            app:editTextSize="18sp"
+            app:clearableEditTextHintColor="#777777"
+            app:editTextHintContent="Search"
+            app:clearIconRes="@drawable/clear_edit_selector"
+            app:clearIconMarginLeft="10dp"
+            app:clearIconMarginRight="10dp"
+            />
+
+    <TextView
+            android:id="@+id/mTvInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            tools:text="Input is: "
+            />
+
+    <TextView
+            android:id="@+id/mTvAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            tools:text="Action is: ?"
+            />
+
+    <com.github.piasy.handywidgets.clearableedittext.ClearableEditText
+            android:id="@+id/mClearableEditText2"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/round_corner_bg"
+            app:hasSearchIcon="true"
+            app:searchIconRes="@drawable/iv_search_grey"
+            app:searchIconMarginLeft="10dp"
+            app:searchIconMarginRight="10dp"
+            app:editTextSize="18sp"
+            app:clearableEditTextHintColor="#777777"
+            app:editTextHintContent="Search"
+            app:clearIconRes="@drawable/clear_edit_selector"
+            app:clearIconMarginLeft="10dp"
+            app:clearIconMarginRight="10dp"
+            />
+
+    <TextView
+            android:id="@+id/mTvInput2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            tools:text="Input is: "
+            />
+
+    <TextView
+            android:id="@+id/mTvAction2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            tools:text="Action is: ?"
+            />
+</LinearLayout>

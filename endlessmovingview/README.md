@@ -1,5 +1,5 @@
 #EndlessMovingView
-[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion)  
+[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-HandyWidgets-green.svg?style=flat)](https://android-arsenal.com/details/1/2455)
 A handy view that support endless moving a drawable(image, xml drawable), or a custom figure recorded in a [Path](http://developer.android.com/reference/android/graphics/Path.html).  
 An endless moving view is a period graph, it repeat its single period to fill the view, and shifting towards the direction with the speed configured.
 
@@ -44,11 +44,12 @@ An endless moving view is a period graph, it repeat its single period to fill th
   +  EndlessMovingPathView  
   Excend `EndlessMovingPathView` and override its `getSinglePeriodGraphWidth()`, `getSinglePeriodGraphHeight()`, `drawPath(Path path, @EndlessMovingView.MovingDir int movingDir, int start, int minX, int maxX, int minY, int maxY)` method, to set single period graph width, height, and draw one single graph in the `Path` object.  
   Examples is [xml](../app/src/main/res/layout/activity_endless_moving_view.xml#L147), [code](../app/src/main/java/com/github/piasy/handywidgets/SimpleEndlessMovingPathView.java).
-  
+  +  Full example could be found at [the app module](../app/)
+
 +  Todo
   +  Correct start/stop control
   +  ~~EndlessMovingPathView~~
-  +  Screenshot
+  +  ~~Screenshot~~
   +  Performance opt
   
 +  Acknowledgement

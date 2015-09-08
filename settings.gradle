@@ -1,1 +1,1 @@
-include ':app', ':centertitlesidebuttonbar', ':endlessmovingview'
+include ':app', ':centertitlesidebuttonbar', ':endlessmovingview', ':clearableedittext'

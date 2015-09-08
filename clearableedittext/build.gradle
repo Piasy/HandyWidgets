@@ -1,11 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply from: "${rootProject.rootDir}/bintray.gradle"
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
-        applicationId "com.github.piasy.handywidgets"
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode rootProject.ext.releaseVersionCode
@@ -20,10 +20,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:' + rootProject.ext.androidSupportSdkVersion
-    compile project(":centertitlesidebuttonbar")
-    compile project(":endlessmovingview")
-    compile project(":clearableedittext")
-
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-annotations:' + rootProject.ext.androidSupportSdkVersion
+    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
 }

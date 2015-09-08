@@ -29,6 +29,9 @@
         <activity
                 android:name=".AnimateCompareActivity"
                 android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+        <activity
+                android:name=".ClearableEditTextActivity"
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
     </application>
 
 </manifest>

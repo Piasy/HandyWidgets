@@ -5,8 +5,10 @@
     <string name="action_settings">Settings</string>
     <string name="center_title_side_button_bar">CenterTitleSideButtonBar</string>
     <string name="endless_moving_view">EndlessMovingView</string>
+    <string name="clearable_edit_text">ClearableEditText</string>
     <string name="text_start">Start</string>
     <string name="text_stop">Stop</string>
+    <string name="text_search">Search</string>
     <string name="animate_with_standard_api">Animation with Android animation API</string>
     <string name="animate_with_endless_moving_view">Animation with EndlessMovingView</string>
 </resources>

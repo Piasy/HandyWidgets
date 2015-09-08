@@ -2,19 +2,32 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@android:color/white"
+              android:background="@android:color/darker_gray"
         >
+
     <Button
-            android:id="@+id/center_title_side_button_bar"
+            android:id="@+id/mBtnCenterTitleSideButtonBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:text="@string/center_title_side_button_bar"
             />
 
     <Button
-            android:id="@+id/endless_moving_view"
+            android:id="@+id/mBtnEndlessMovingView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/endless_moving_view"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            />
+
+    <Button
+            android:id="@+id/mBtnClearableEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clearable_edit_text"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
             />
 </LinearLayout>

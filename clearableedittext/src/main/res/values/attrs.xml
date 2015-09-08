@@ -24,29 +24,21 @@
   -->
 
 <resources>
-    <declare-styleable name="EndlessMovingView">
-        <attr name="stopWhenLoseFocus" format="boolean"/>
-        <attr name="autoStart" format="boolean"/>
+    <declare-styleable name="ClearableEditText">
+        <attr name="hasSearchIcon" format="boolean"/>
+        <attr name="searchIconRes" format="reference"/>
+        <attr name="searchIconMarginLeft" format="dimension"/>
+        <attr name="searchIconMarginRight" format="dimension"/>
 
-        <attr name="movingDir" format="enum">
-            <enum name="left" value="0"/>
-            <enum name="up" value="1"/>
-            <enum name="right" value="2"/>
-            <enum name="down" value="3"/>
-        </attr>
+        <attr name="clearableEditTextColor" format="color"/>
+        <attr name="editTextContent" format="string"/>
+        <attr name="clearableEditTextHintColor" format="color"/>
+        <attr name="editTextHintContent" format="string"/>
+        <attr name="editTextSize" format="dimension"/>
+        <attr name="editTextAutoFocus" format="boolean"/>
 
-        <!-- moving speed pixels/frame, in 60 fps -->
-        <attr name="movingSpeed" format="integer"/>
-
-        <!-- used for EndlessMovingBitmapView -->
-        <attr name="singlePeriodBitmap" format="reference"/>
-
-        <!-- used for EndlessMovingPathView -->
-        <attr name="paintColor" format="color"/>
-        <attr name="paintStyle" format="enum">
-            <enum name="fill" value="0"/>
-            <enum name="stroke" value="1"/>
-            <enum name="fill_and_stroke" value="2"/>
-        </attr>
+        <attr name="clearIconRes" format="reference"/>
+        <attr name="clearIconMarginLeft" format="dimension"/>
+        <attr name="clearIconMarginRight" format="dimension"/>
     </declare-styleable>
 </resources>

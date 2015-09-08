@@ -1,5 +1,5 @@
 # HandyWidgets
-[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion)  
+[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-HandyWidgets-green.svg?style=flat)](https://android-arsenal.com/details/1/2455)  
 Handy Android widgets.
 
 ##[CenterTitleSideButtonBar](centertitlesidebuttonbar/README.md)  
@@ -21,7 +21,7 @@ Allow fully customization against the title bar. No more Google/StackOverFlow se
 ##[EndlessMovingView](endlessmovingview/README.md)
 A handy view that support endless moving a drawable(image, xml drawable), or a custom figure recorded in a [Path](http://developer.android.com/reference/android/graphics/Path.html).
 +  Screenshot  
-
+![EndlessMovingBitmapView.gif](art/EndlessMovingBitmapView.gif)
 +  Download
 ```groovy
     repositories {
@@ -30,5 +30,20 @@ A handy view that support endless moving a drawable(image, xml drawable), or a c
 
     dependencies {
         compile "com.github.piasy:endlessmovingview:${latest version}"
+    }
+```
+
+##[ClearableEditText](clearableedittext/README.md)
+A widget which has functions of EditText, has a clear button, and has an optional search icon, also with ability for full customization. This widget also provide method to get notified when text content changed, or editor action happens, in both traditional listener and popular Rx Observable way!
++  Screenshot  
+![clearable_edit_text.gif](art/clearable_edit_text.gif)
++  Download
+```groovy
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        compile "com.github.piasy:clearableedittext:${latest version}"
     }
 ```
