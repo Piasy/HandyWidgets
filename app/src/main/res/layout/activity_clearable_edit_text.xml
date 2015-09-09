@@ -6,37 +6,75 @@
               android:orientation="vertical"
               android:background="@android:color/darker_gray"
         >
-
-
     <com.github.piasy.handywidgets.clearableedittext.ClearableEditText
-            android:id="@+id/mClearableEditText"
+            android:id="@+id/mEtUsername"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/round_corner_bg"
-            app:hasSearchIcon="true"
-            app:searchIconRes="@drawable/iv_search_grey"
-            app:searchIconMarginLeft="10dp"
-            app:searchIconMarginRight="10dp"
+            app:hasIcon="true"
+            app:iconRes="@drawable/ic_person_blue_grey_500_24dp"
+            app:iconMarginLeft="10dp"
+            app:iconMarginRight="3dp"
             app:editTextSize="18sp"
             app:clearableEditTextHintColor="#777777"
-            app:editTextHintContent="Search"
+            app:editTextHintContent="Username"
             app:clearIconRes="@drawable/clear_edit_selector"
             app:clearIconMarginLeft="10dp"
             app:clearIconMarginRight="10dp"
+            app:editTextAutoFocus="true"
+            />
+
+    <com.github.piasy.handywidgets.clearableedittext.ClearableEditText
+            android:id="@+id/mEtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/round_corner_bg"
+            android:inputType="textPassword"
+            app:hasIcon="true"
+            app:iconRes="@drawable/ic_vpn_key_blue_grey_500_24dp"
+            app:iconMarginLeft="10dp"
+            app:iconMarginRight="3dp"
+            app:isPassword="true"
+            app:editTextSize="18sp"
+            app:clearableEditTextHintColor="#777777"
+            app:editTextHintContent="Password"
+            app:clearIconRes="@drawable/clear_edit_selector"
+            app:clearIconMarginLeft="10dp"
+            app:clearIconMarginRight="10dp"
+            app:hasVisibilitySwitch="true"
+            app:visibilitySwitchMarginRight="10dp"
+            app:visibilitySwitchWidth="24dp"
+            app:visibilitySwitchHeight="24dp"
+            app:visibilitySwitchBg="@drawable/password_visibility_selector"
+            app:editTextAutoFocus="false"
             />
 
     <TextView
-            android:id="@+id/mTvInput"
+            android:id="@+id/mTvInputUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            tools:text="Username is: "
+            />
+
+    <TextView
+            android:id="@+id/mTvInputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingLeft="20dp"
             android:textSize="20sp"
             android:textColor="#000000"
-            tools:text="Input is: "
+            tools:text="Password is: "
             />
 
     <TextView
@@ -47,48 +85,7 @@
             android:paddingLeft="20dp"
             android:textSize="20sp"
             android:textColor="#000000"
-            tools:text="Action is: ?"
+            tools:text="Action done not invoked"
             />
 
-    <com.github.piasy.handywidgets.clearableedittext.ClearableEditText
-            android:id="@+id/mClearableEditText2"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/round_corner_bg"
-            app:hasSearchIcon="true"
-            app:searchIconRes="@drawable/iv_search_grey"
-            app:searchIconMarginLeft="10dp"
-            app:searchIconMarginRight="10dp"
-            app:editTextSize="18sp"
-            app:clearableEditTextHintColor="#777777"
-            app:editTextHintContent="Search"
-            app:clearIconRes="@drawable/clear_edit_selector"
-            app:clearIconMarginLeft="10dp"
-            app:clearIconMarginRight="10dp"
-            />
-
-    <TextView
-            android:id="@+id/mTvInput2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            tools:text="Input is: "
-            />
-
-    <TextView
-            android:id="@+id/mTvAction2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            tools:text="Action is: ?"
-            />
 </LinearLayout>

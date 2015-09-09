@@ -29,6 +29,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -37,6 +38,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,12 +60,15 @@ public class ClearableEditText extends LinearLayout {
     private final boolean mIsEditTextAutoFocus;
     private final EditText mEditText;
     private final ImageButton mClearButton;
+    private final CheckBox mCheckBox;
 
     private OnTextChangedListener mOnTextChangedListener;
     private Subscription mOnTextChangedSubscription;
     private boolean mIsEditorActionsMonitored = false;
     private OnEditorActionDoneListener mOnEditorActionDoneListener;
     private Subscription mEditorActionsSubscription;
+
+    private final boolean mIsPassword;
 
     public ClearableEditText(Context context) {
         this(context, null);
@@ -79,14 +85,12 @@ public class ClearableEditText extends LinearLayout {
 
         TypedArray a = context.getTheme()
                 .obtainStyledAttributes(attrs, R.styleable.ClearableEditText, 0, 0);
-        boolean hasSearchIcon = a.getBoolean(R.styleable.ClearableEditText_hasSearchIcon, false);
-        int searchIconRes = a.getResourceId(R.styleable.ClearableEditText_searchIconRes, 0);
-        int searchIconMarginLeft =
-                a.getDimensionPixelSize(R.styleable.ClearableEditText_searchIconMarginLeft,
-                        dip2px(10, context));
-        int searchIconMarginRight =
-                a.getDimensionPixelSize(R.styleable.ClearableEditText_searchIconMarginRight,
-                        dip2px(10, context));
+        boolean hasIcon = a.getBoolean(R.styleable.ClearableEditText_hasIcon, false);
+        int iconRes = a.getResourceId(R.styleable.ClearableEditText_iconRes, 0);
+        int iconMarginLeft = a.getDimensionPixelSize(R.styleable.ClearableEditText_iconMarginLeft,
+                dip2px(10, context));
+        int iconMarginRight = a.getDimensionPixelSize(R.styleable.ClearableEditText_iconMarginRight,
+                dip2px(10, context));
 
         int editTextColor =
                 a.getColor(R.styleable.ClearableEditText_clearableEditTextColor, 0xFF000000);
@@ -96,33 +100,49 @@ public class ClearableEditText extends LinearLayout {
         String editTextHintContent = a.getString(R.styleable.ClearableEditText_editTextHintContent);
         float editTextSize = a.getDimension(R.styleable.ClearableEditText_editTextSize, 20);
         mIsEditTextAutoFocus = a.getBoolean(R.styleable.ClearableEditText_editTextAutoFocus, true);
+        int inputType = getInputType(context, attrs);
+        mIsPassword = a.getBoolean(R.styleable.ClearableEditText_isPassword, false);
+        int editTextBg =
+                a.getResourceId(R.styleable.ClearableEditText_clearableEditTextBackground, 0);
 
         int clearIconRes = a.getResourceId(R.styleable.ClearableEditText_clearIconRes, 0);
         int clearIconMarginLeft =
-                a.getDimensionPixelSize(R.styleable.ClearableEditText_searchIconMarginLeft,
+                a.getDimensionPixelSize(R.styleable.ClearableEditText_clearIconMarginLeft,
                         dip2px(10, context));
         int clearIconMarginRight =
-                a.getDimensionPixelSize(R.styleable.ClearableEditText_searchIconMarginRight,
+                a.getDimensionPixelSize(R.styleable.ClearableEditText_clearIconMarginRight,
                         dip2px(10, context));
 
+        boolean hasVisibilitySwitch =
+                a.getBoolean(R.styleable.ClearableEditText_hasVisibilitySwitch, false);
+        int visibilitySwitchMarginRight =
+                a.getDimensionPixelSize(R.styleable.ClearableEditText_visibilitySwitchMarginRight,
+                        dip2px(10, context));
+        int visibilitySwitchWidth =
+                a.getDimensionPixelSize(R.styleable.ClearableEditText_visibilitySwitchWidth, -2);
+        int visibilitySwitchHeight =
+                a.getDimensionPixelSize(R.styleable.ClearableEditText_visibilitySwitchHeight, -2);
+        int visibilitySwitchBg =
+                a.getResourceId(R.styleable.ClearableEditText_visibilitySwitchBg, 0);
         a.recycle();
 
         if (clearIconRes == 0) {
             throw new IllegalArgumentException("Clear icon resource must be set!");
         }
 
-        if (hasSearchIcon) {
+        if (hasIcon) {
+            ImageView searchIcon = new ImageView(context);
+            searchIcon.setImageResource(iconRes);
             LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            ImageView searchIcon = new ImageView(context);
-            searchIcon.setImageResource(searchIconRes);
-            params.leftMargin = searchIconMarginLeft;
-            params.rightMargin = searchIconMarginRight;
+            params.leftMargin = iconMarginLeft;
+            params.rightMargin = iconMarginRight;
             searchIcon.setLayoutParams(params);
             addView(searchIcon);
         }
 
         mEditText = new EditText(context);
+        mEditText.setSingleLine();
         mEditText.setTextColor(editTextColor);
         mEditText.setHintTextColor(editTextHintColor);
         mEditText.setTextSize(TypedValue.COMPLEX_UNIT_PX, editTextSize);
@@ -134,7 +154,10 @@ public class ClearableEditText extends LinearLayout {
         params.width = 0;
         params.weight = 1;
         mEditText.setLayoutParams(params);
-        mEditText.setBackgroundResource(0);
+        mEditText.setBackgroundResource(editTextBg);
+        if (inputType != EditorInfo.TYPE_NULL) {
+            mEditText.setInputType(inputType);
+        }
         addView(mEditText);
 
         mClearButton = new ImageButton(context);
@@ -148,11 +171,46 @@ public class ClearableEditText extends LinearLayout {
         addView(mClearButton);
         mClearButton.setVisibility(INVISIBLE);
 
+        if (hasVisibilitySwitch) {
+            mCheckBox = new CheckBox(context);
+            mCheckBox.setButtonDrawable(0);
+            mCheckBox.setBackgroundResource(visibilitySwitchBg);
+            LayoutParams params3 = new LayoutParams(visibilitySwitchWidth, visibilitySwitchHeight);
+            params3.rightMargin = visibilitySwitchMarginRight;
+            mCheckBox.setLayoutParams(params3);
+            addView(mCheckBox);
+        } else {
+            mCheckBox = null;
+        }
+
         initListener();
     }
 
+    private int getInputType(@NonNull Context context, @NonNull AttributeSet attrs) {
+        int[] systemAttrs = { android.R.attr.inputType };
+        TypedArray a = context.obtainStyledAttributes(attrs, systemAttrs);
+        int inputType = a.getInt(0, EditorInfo.TYPE_NULL);
+        a.recycle();
+        return inputType;
+    }
+
     private void initListener() {
-        mEditText.setSingleLine();
+        if (mIsPassword && mCheckBox != null) {
+            mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        mEditText.setInputType(InputType.TYPE_CLASS_TEXT |
+                                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    } else {
+                        mEditText.setInputType(
+                                InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    }
+                    mEditText.setSelection(mEditText.getText().length());
+                }
+            });
+        }
+
         mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -344,5 +402,12 @@ public class ClearableEditText extends LinearLayout {
                 }
             });
         }
+    }
+
+    /**
+     * Request focus for EditText.
+     */
+    public void requestFocusOnEditText() {
+        mEditText.requestFocus();
     }
 }

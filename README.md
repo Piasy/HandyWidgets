@@ -1,6 +1,6 @@
 # HandyWidgets
-[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-HandyWidgets-green.svg?style=flat)](https://android-arsenal.com/details/1/2455)  
-Handy Android widgets.
+[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-HandyWidgets-green.svg?style=flat)](https://android-arsenal.com/details/1/2455) [![Alt](http://developer.android.com/images/brand/en_app_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=com.github.piasy.handywidgets)  
+Handy Android widgets.  
 
 ##[CenterTitleSideButtonBar](centertitlesidebuttonbar/README.md)  
 Title bar with center title TextView, side(left & right) button and bottom divider.  

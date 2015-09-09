@@ -20,19 +20,17 @@ import rx.functions.Action1;
  */
 public class ClearableEditTextActivity extends Activity {
 
-    @Bind(R.id.mTvInput)
-    TextView mTvInput;
+    @Bind(R.id.mEtUsername)
+    ClearableEditText mEtUsername;
+    @Bind(R.id.mEtPassword)
+    ClearableEditText mEtPassword;
+
+    @Bind(R.id.mTvInputUsername)
+    TextView mTvInputUsername;
+    @Bind(R.id.mTvInputPassword)
+    TextView mTvInputPassword;
     @Bind(R.id.mTvAction)
     TextView mTvAction;
-    @Bind(R.id.mClearableEditText)
-    ClearableEditText mClearableEditText;
-
-    @Bind(R.id.mTvInput2)
-    TextView mTvInput2;
-    @Bind(R.id.mTvAction2)
-    TextView mTvAction2;
-    @Bind(R.id.mClearableEditText2)
-    ClearableEditText mClearableEditText2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,36 +38,36 @@ public class ClearableEditTextActivity extends Activity {
         setContentView(R.layout.activity_clearable_edit_text);
         ButterKnife.bind(this);
 
-        mClearableEditText.textChanges().subscribe(new Action1<CharSequence>() {
+        mEtUsername.textChanges().subscribe(new Action1<CharSequence>() {
             @Override
             public void call(CharSequence charSequence) {
-                mTvInput.setText("Input is: " + charSequence);
+                mTvInputUsername.setText("Username is: " + charSequence);
             }
         });
-        mClearableEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        mClearableEditText.editorActions().subscribe(new Action1<Integer>() {
+        mEtUsername.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        mEtUsername.editorActions().subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer code) {
                 Log.d("ClearableEditText", "ClearableEditText Action: " + code);
                 if (code == EditorInfo.IME_ACTION_DONE) {
-                    mTvAction.setText("IME_ACTION_DONE detected");
+                    mEtPassword.requestFocusOnEditText();
                 }
             }
         });
-        mTvAction.setText("Action is: ?");
 
-        mClearableEditText2.setOnTextChangedListener(new OnTextChangedListener() {
+        mEtPassword.setOnTextChangedListener(new OnTextChangedListener() {
             @Override
             public void onTextChanged(CharSequence text) {
-                mTvInput2.setText("Input is: " + text);
+                mTvInputPassword.setText("Password is: " + text);
             }
         });
-        mClearableEditText2.setOnEditorActionDoneListener(new OnEditorActionDoneListener() {
+        mEtPassword.setOnEditorActionDoneListener(new OnEditorActionDoneListener() {
             @Override
             public void onEditorActionDone() {
-                mTvAction2.setText("IME_ACTION_DONE detected");
+                mTvAction.setText("IME_ACTION_DONE invoked");
             }
         });
-        mTvAction2.setText("Action is: ?");
+
+        mTvAction.setText("Action done not invoked");
     }
 }

@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">HandyWidgets</string>
+    <string name="app_name">HandyWidgetsExample</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_compare">Compare</string>
     <string name="center_title_side_button_bar">CenterTitleSideButtonBar</string>
     <string name="endless_moving_view">EndlessMovingView</string>
     <string name="clearable_edit_text">ClearableEditText</string>
