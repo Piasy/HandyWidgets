@@ -410,4 +410,13 @@ public class ClearableEditText extends LinearLayout {
     public void requestFocusOnEditText() {
         mEditText.requestFocus();
     }
+
+    /**
+     * Get current text.
+     *
+     * @return current text.
+     * */
+    public CharSequence getText() {
+        return mEditText.getText();
+    }
 }

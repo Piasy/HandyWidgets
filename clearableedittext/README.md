@@ -73,6 +73,7 @@ A widget which has functions of EditText, has an optional icon, has a clear butt
         />
   ```
   +  Or you want to specify other input types, just use the `android:inputType` attribute, set it to standard inputType.
+  +  Get current text in EditText: `mEtUsername.getText()`
   +  Get notified in popular Rx Observable way:
   ```java
     mEtUsername.textChanges().subscribe(new Action1<CharSequence>() {
