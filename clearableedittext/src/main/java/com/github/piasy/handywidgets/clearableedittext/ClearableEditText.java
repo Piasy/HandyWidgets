@@ -440,4 +440,31 @@ public class ClearableEditText extends LinearLayout {
     public CharSequence getText() {
         return mEditText.getText();
     }
+
+    /**
+     * Set current text.
+     *
+     * @param text text to set.
+     */
+    public void setText(CharSequence text) {
+        mEditText.setText(text);
+    }
+
+    /**
+     * Get current hint.
+     *
+     * @return current hint.
+     */
+    public CharSequence getHint() {
+        return mEditText.getHint();
+    }
+
+    /**
+     * Set current hint.
+     *
+     * @param hint hint to set.
+     */
+    public void setHint(CharSequence hint) {
+        mEditText.setHint(hint);
+    }
 }
