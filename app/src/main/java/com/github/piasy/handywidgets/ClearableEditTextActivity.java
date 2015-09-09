@@ -50,7 +50,8 @@ public class ClearableEditTextActivity extends Activity {
             public void call(Integer code) {
                 Log.d("ClearableEditText", "ClearableEditText Action: " + code);
                 if (code == EditorInfo.IME_ACTION_DONE) {
-                    mEtPassword.requestFocusOnEditText();
+                    mEtUsername.hideKeyboard();
+                    mEtPassword.showKeyboard();
                 }
             }
         });
@@ -65,9 +66,12 @@ public class ClearableEditTextActivity extends Activity {
             @Override
             public void onEditorActionDone() {
                 mTvAction.setText("IME_ACTION_DONE invoked");
+                mEtPassword.hideKeyboard();
             }
         });
 
         mTvAction.setText("Action done not invoked");
+
+        mEtUsername.showKeyboard();
     }
 }

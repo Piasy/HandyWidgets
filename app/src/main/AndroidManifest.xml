@@ -21,17 +21,21 @@
         </activity>
         <activity
                 android:name=".CenterTitleSideButtonBarActivity"
-                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+                />
         <activity
                 android:name=".EndlessMovingViewActivity"
                 android:theme="@style/Base.Theme.AppCompat"
                 />
         <activity
                 android:name=".AnimateCompareActivity"
-                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+                />
         <activity
                 android:name=".ClearableEditTextActivity"
-                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+                android:windowSoftInputMode="stateVisible"
+                />
     </application>
 
 </manifest>

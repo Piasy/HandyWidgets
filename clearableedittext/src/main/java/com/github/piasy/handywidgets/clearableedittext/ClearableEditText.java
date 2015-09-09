@@ -38,6 +38,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -412,10 +413,30 @@ public class ClearableEditText extends LinearLayout {
     }
 
     /**
+     * Show soft keyboard.
+     */
+    public void showKeyboard() {
+        mEditText.requestFocus();
+        ((InputMethodManager) getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE)).showSoftInput(mEditText,
+                InputMethodManager.SHOW_FORCED);
+    }
+
+    /**
+     * Hide soft keyboard.
+     */
+    public void hideKeyboard() {
+        mEditText.clearFocus();
+        ((InputMethodManager) getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(),
+                0);
+    }
+
+    /**
      * Get current text.
      *
      * @return current text.
-     * */
+     */
     public CharSequence getText() {
         return mEditText.getText();
     }
