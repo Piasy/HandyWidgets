@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -452,6 +453,15 @@ public class ClearableEditText extends LinearLayout {
     }
 
     /**
+     * Set current text.
+     *
+     * @param text text resource id to set.
+     */
+    public void setText(@StringRes int text) {
+        mEditText.setText(text);
+    }
+
+    /**
      * Get current hint.
      *
      * @return current hint.
@@ -466,6 +476,15 @@ public class ClearableEditText extends LinearLayout {
      * @param hint hint to set.
      */
     public void setHint(CharSequence hint) {
+        mEditText.setHint(hint);
+    }
+
+    /**
+     * Set current hint.
+     *
+     * @param hint hint resource id to set.
+     */
+    public void setHint(@StringRes int hint) {
         mEditText.setHint(hint);
     }
 
