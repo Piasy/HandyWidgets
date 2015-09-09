@@ -29,6 +29,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -466,5 +467,14 @@ public class ClearableEditText extends LinearLayout {
      */
     public void setHint(CharSequence hint) {
         mEditText.setHint(hint);
+    }
+
+    /**
+     * Set filters to EditText.
+     *
+     * @param filters filters to set.
+     */
+    public void setFilters(@NonNull InputFilter[] filters) {
+        mEditText.setFilters(filters);
     }
 }

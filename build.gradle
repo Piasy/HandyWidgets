@@ -23,7 +23,7 @@ allprojects {
 ext {
     groupName = 'com.github.piasy'
     releaseVersionCode = 2
-    releaseVersionName = "0.2.4"
+    releaseVersionName = "0.2.5"
     androidCompileSdkVersion = 23
     androidBuildToolsVersion = '23.0.0'
     androidMinSdkVersion = 14
