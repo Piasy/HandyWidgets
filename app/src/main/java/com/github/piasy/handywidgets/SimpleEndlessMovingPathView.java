@@ -9,7 +9,7 @@ import com.github.piasy.handywidgets.endlessmovingview.EndlessMovingView;
 /**
  * Created by Piasy{github.com/Piasy} on 15/9/1.
  */
-public class SimpleEndlessMovingPathView extends EndlessMovingPathView {
+public final class SimpleEndlessMovingPathView extends EndlessMovingPathView {
     public SimpleEndlessMovingPathView(Context context) {
         this(context, null);
     }

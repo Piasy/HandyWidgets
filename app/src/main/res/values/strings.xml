@@ -9,6 +9,7 @@
     <string name="text_start">Start</string>
     <string name="text_stop">Stop</string>
     <string name="text_search">Search</string>
+    <string name="text_cancel">Cancel</string>
     <string name="animate_with_standard_api">Animation with Android animation API</string>
     <string name="animate_with_endless_moving_view">Animation with EndlessMovingView</string>
 </resources>

@@ -58,7 +58,7 @@ import rx.Subscription;
  * A widget that has functions of {@link EditText} and have a clear button. With full ability for
  * customization.
  */
-public class ClearableEditText extends LinearLayout {
+public final class ClearableEditText extends LinearLayout {
 
     private final boolean mIsEditTextAutoFocus;
     private final EditText mEditText;
@@ -145,6 +145,8 @@ public class ClearableEditText extends LinearLayout {
         }
 
         mEditText = new EditText(context);
+        mEditText.setGravity(Gravity.CENTER_VERTICAL);
+        mEditText.setPadding(0, 0, 0, 0);
         mEditText.setSingleLine();
         mEditText.setTextColor(editTextColor);
         mEditText.setHintTextColor(editTextHintColor);
@@ -152,12 +154,12 @@ public class ClearableEditText extends LinearLayout {
         mEditText.setText(editTextContent);
         mEditText.setHint(editTextHintContent);
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                ViewGroup.LayoutParams.MATCH_PARENT);
         params.width = 0;
         params.weight = 1;
         mEditText.setLayoutParams(params);
         mEditText.setBackgroundResource(editTextBg);
+        mEditText.setCursorVisible(true);
         if (inputType != EditorInfo.TYPE_NULL) {
             mEditText.setInputType(inputType);
         }

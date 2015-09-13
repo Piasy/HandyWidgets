@@ -52,6 +52,16 @@
         <attr name="rightButtonSrc" format="reference"/>
         <attr name="rightButtonBg" format="reference"/>
 
+        <attr name="rightButtonAsSearchView" format="boolean"/>
+        <attr name="searchViewDefaultShown" format="boolean"/>
+        <attr name="searchViewBg" format="reference"/>
+        <attr name="searchViewHeight" format="dimension"/>
+        <attr name="searchViewMarginLeft" format="dimension"/>
+        <attr name="searchViewMarginRight" format="dimension"/>
+        <attr name="closeSearchViewId" format="reference"/>
+        <attr name="closeSearchViewText" format="string"/>
+        <attr name="closeSearchViewTextSize" format="dimension"/>
+        <attr name="closeSearchViewTextColor" format="color"/>
 
         <!-- title -->
         <attr name="hasTitle" format="boolean"/>

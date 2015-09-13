@@ -40,11 +40,19 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.github.piasy.handywidgets.clearableedittext.ClearableEditText;
+import com.github.piasy.handywidgets.clearableedittext.OnEditorActionDoneListener;
+import com.github.piasy.handywidgets.clearableedittext.OnTextChangedListener;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.Slide;
+import com.transitionseverywhere.TransitionManager;
+import com.transitionseverywhere.TransitionSet;
+import rx.Observable;
 
 /**
  * Created by Piasy{github.com/Piasy} on 15/8/27.
  */
-public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnClickListener {
+public final class CenterTitleSideButtonBar extends RelativeLayout implements View.OnClickListener {
     private int mLayoutHeight = 44;
     private boolean mHasLeftButton = false;
     private int mLeftButtonId = -1;
@@ -72,6 +80,18 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
     private
     @DrawableRes
     int mRightButtonBg = 0;
+    private int mCloseSearchViewId = -1;
+    private boolean mRightButtonAsSearchView = false;
+    private boolean mSearchViewDefaultShown = false;
+    private
+    @DrawableRes
+    int mSearchViewBg = 0;
+    private int mSearchViewHeight = ViewGroup.LayoutParams.MATCH_PARENT;
+    private int mSearchViewMarginLeft = 0;
+    private int mSearchViewMarginRight = 0;
+    private String mCloseSearchViewText = "";
+    private ColorStateList mCloseSearchViewTextColor;
+    private int mCloseSearchViewTextSize = 20;
     private boolean mHasTitle = true;
     private int mTitleId = -1;
     private String mTitle = "";
@@ -91,6 +111,8 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
     private ImageButton mRightImageButton = null;
     private Button mRightButton = null;
     private TextView mTitleTextView = null;
+    private ClearableEditText mClearableEditText;
+    private Button mCloseSearchButton;
     private View mDivider = null;
     private OnClickListener mLeftButtonClickListener;
     private OnClickListener mRightButtonClickListener;
@@ -108,7 +130,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         super(context, attrs, defStyleAttr);
         getLayoutAttrs(context, attrs);
         initAttrs(context, attrs, defStyleAttr);
-        initChild(context);
+        initChild(context, attrs, defStyleAttr);
     }
 
     private void getLayoutAttrs(@NonNull Context context, AttributeSet attrs) {
@@ -150,6 +172,29 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 (int) a.getDimension(R.styleable.CenterTitleSideButtonBar_rightButtonTextSize, 20);
         mRightButtonSrc = a.getResourceId(R.styleable.CenterTitleSideButtonBar_rightButtonSrc, 0);
         mRightButtonBg = a.getResourceId(R.styleable.CenterTitleSideButtonBar_rightButtonBg, 0);
+        mRightButtonAsSearchView =
+                a.getBoolean(R.styleable.CenterTitleSideButtonBar_rightButtonAsSearchView, false);
+        if (mRightButtonAsSearchView) {
+            mCloseSearchViewId =
+                    a.getResourceId(R.styleable.CenterTitleSideButtonBar_closeSearchViewId, -1);
+            mSearchViewDefaultShown =
+                    a.getBoolean(R.styleable.CenterTitleSideButtonBar_searchViewDefaultShown,
+                            false);
+            mSearchViewBg = a.getResourceId(R.styleable.CenterTitleSideButtonBar_searchViewBg, 0);
+            mSearchViewHeight =
+                    a.getDimensionPixelSize(R.styleable.CenterTitleSideButtonBar_searchViewHeight,
+                            ViewGroup.LayoutParams.MATCH_PARENT);
+            mSearchViewMarginLeft = a.getDimensionPixelSize(
+                    R.styleable.CenterTitleSideButtonBar_searchViewMarginLeft, 0);
+            mSearchViewMarginRight = a.getDimensionPixelSize(
+                    R.styleable.CenterTitleSideButtonBar_searchViewMarginRight, 0);
+            mCloseSearchViewText =
+                    a.getString(R.styleable.CenterTitleSideButtonBar_closeSearchViewText);
+            mCloseSearchViewTextColor = a.getColorStateList(
+                    R.styleable.CenterTitleSideButtonBar_closeSearchViewTextColor);
+            mCloseSearchViewTextSize = (int) a.getDimension(
+                    R.styleable.CenterTitleSideButtonBar_closeSearchViewTextSize, 20);
+        }
 
         mHasTitle = a.getBoolean(R.styleable.CenterTitleSideButtonBar_hasTitle, true);
         mTitleId = a.getResourceId(R.styleable.CenterTitleSideButtonBar_titleId, -1);
@@ -170,7 +215,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         a.recycle();
     }
 
-    private void initChild(Context context) {
+    private void initChild(Context context, AttributeSet attrs, int defStyleAttr) {
         if (mHasLeftButton) {
             LayoutParams params;
             if (mLayoutHeight != ViewGroup.LayoutParams.WRAP_CONTENT) {
@@ -201,6 +246,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 mLeftButton.setOnClickListener(this);
                 if (!mLeftButtonShownDefault) {
                     mLeftButton.setVisibility(INVISIBLE);
+                    mIsLeftButtonShown = false;
                 }
                 addView(mLeftButton);
             } else if (mLeftButtonBg != 0 || mLeftButtonSrc != 0) {
@@ -216,6 +262,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 mLeftImageButton.setOnClickListener(this);
                 if (!mLeftButtonShownDefault) {
                     mLeftImageButton.setVisibility(INVISIBLE);
+                    mIsLeftButtonShown = false;
                 }
                 addView(mLeftImageButton);
             }
@@ -251,6 +298,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 mRightButton.setOnClickListener(this);
                 if (!mRightButtonShownDefault) {
                     mRightButton.setVisibility(INVISIBLE);
+                    mIsRightButtonShown = false;
                 }
                 addView(mRightButton);
             } else if (mRightButtonBg != 0 || mRightButtonSrc != 0) {
@@ -266,6 +314,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 mRightImageButton.setOnClickListener(this);
                 if (!mRightButtonShownDefault) {
                     mRightImageButton.setVisibility(INVISIBLE);
+                    mIsRightButtonShown = false;
                 }
                 addView(mRightImageButton);
             }
@@ -310,15 +359,15 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                     ((mLeftButton != null || mLeftImageButton != null) && mLeftButtonId != -1))) {
                 // left
                 mTitleTextView.setGravity(
-                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
-                                ? Gravity.START : Gravity.LEFT) | Gravity.CENTER_VERTICAL);
+                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ?
+                                Gravity.START : Gravity.LEFT) | Gravity.CENTER_VERTICAL);
             } else if (mTitleGravity == 2 && ((mRightButton == null && mRightImageButton == null) ||
                     ((mRightButton != null || mRightImageButton != null) &&
                             mRightButtonId != -1))) {
                 // right
                 mTitleTextView.setGravity(
-                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
-                                ? Gravity.END : Gravity.RIGHT) | Gravity.CENTER_VERTICAL);
+                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ?
+                                Gravity.END : Gravity.RIGHT) | Gravity.CENTER_VERTICAL);
             } else {
                 mTitleTextView.setGravity(Gravity.CENTER);
             }
@@ -336,11 +385,142 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
             mDivider.setBackgroundColor(mDividerColor);
             addView(mDivider);
         }
+
+        if (mRightButtonAsSearchView) {
+            mClearableEditText = new ClearableEditText(context, attrs, defStyleAttr);
+            mClearableEditText.setBackgroundResource(mSearchViewBg);
+            mCloseSearchButton = new Button(context);
+            mCloseSearchButton.setId(mCloseSearchViewId);
+            LayoutParams params1 =
+                    new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mSearchViewHeight);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                params1.addRule(START_OF, mCloseSearchButton.getId());
+            } else {
+                params1.addRule(LEFT_OF, mCloseSearchButton.getId());
+            }
+            params1.leftMargin = mSearchViewMarginLeft;
+            params1.rightMargin = mSearchViewMarginRight;
+            params1.addRule(CENTER_VERTICAL);
+            mClearableEditText.setLayoutParams(params1);
+            mCloseSearchButton.setText(mCloseSearchViewText);
+            mCloseSearchButton.setTextColor(mCloseSearchViewTextColor);
+            mCloseSearchButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCloseSearchViewTextSize);
+            LayoutParams params;
+            if (mLayoutHeight != ViewGroup.LayoutParams.WRAP_CONTENT) {
+                params = new LayoutParams(mLayoutHeight, mLayoutHeight);
+            } else {
+                params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+            params.addRule(CENTER_VERTICAL);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                params.addRule(ALIGN_PARENT_END);
+            } else {
+                params.addRule(ALIGN_PARENT_RIGHT);
+            }
+            params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            mCloseSearchButton.setLayoutParams(params);
+            mCloseSearchButton.setBackgroundResource(0);
+
+            if (mSearchViewDefaultShown) {
+                showSearchView();
+            } else {
+                mClearableEditText.setVisibility(GONE);
+                mCloseSearchButton.setVisibility(GONE);
+            }
+            mCloseSearchButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hideSearchView();
+                }
+            });
+            addView(mClearableEditText);
+            addView(mCloseSearchButton);
+        }
     }
 
-    @Override
-    public boolean isInEditMode() {
-        return true;
+    public void showSearchView() {
+        setEnterSearchAnimation();
+        if (mLeftButton != null) {
+            mLeftButton.setVisibility(GONE);
+        }
+        if (mLeftImageButton != null) {
+            mLeftImageButton.setVisibility(GONE);
+        }
+        if (mRightButton != null) {
+            mRightButton.setVisibility(GONE);
+        }
+        if (mRightImageButton != null) {
+            mRightImageButton.setVisibility(GONE);
+        }
+        if (mTitleTextView != null) {
+            mTitleTextView.setVisibility(GONE);
+        }
+
+        mClearableEditText.showKeyboard();
+        mClearableEditText.setVisibility(VISIBLE);
+        mCloseSearchButton.setVisibility(VISIBLE);
+    }
+
+    private void setEnterSearchAnimation() {
+        TransitionSet transitionSet = new TransitionSet();
+        if (mClearableEditText != null) {
+            transitionSet.addTransition(
+                    new Slide(Gravity.TOP).addTarget(mClearableEditText).setDuration(150));
+        }
+        if (mCloseSearchButton != null) {
+            transitionSet.addTransition(new Fade(Fade.IN).addTarget(mCloseSearchButton));
+        }
+        if (mLeftButton != null) {
+            transitionSet.addTransition(new Fade(Fade.OUT).addTarget(mLeftButton));
+        }
+        if (mLeftImageButton != null) {
+            transitionSet.addTransition(new Fade(Fade.OUT).addTarget(mLeftImageButton));
+        }
+        if (mTitleTextView != null) {
+            transitionSet.addTransition(new Fade(Fade.OUT).addTarget(mTitleTextView).setDuration(
+                    150));
+        }
+        if (mRightButton != null) {
+            transitionSet.addTransition(new Fade(Fade.OUT).addTarget(mRightButton));
+        }
+        if (mRightImageButton != null) {
+            transitionSet.addTransition(new Fade(Fade.OUT).addTarget(mRightImageButton));
+        }
+
+        TransitionManager.beginDelayedTransition(this, transitionSet);
+    }
+
+    public void hideSearchView() {
+        setLeaveSearchAnimation();
+        if (mIsLeftButtonShown) {
+            if (mLeftButton != null) {
+                mLeftButton.setVisibility(VISIBLE);
+            } else if (mLeftImageButton != null) {
+                mLeftImageButton.setVisibility(VISIBLE);
+            }
+        }
+
+        if (mIsRightButtonShown) {
+            if (mRightButton != null) {
+                mRightButton.setVisibility(VISIBLE);
+            } else if (mRightImageButton != null) {
+                mRightImageButton.setVisibility(VISIBLE);
+            }
+        }
+
+        if (mTitleTextView != null) {
+            mTitleTextView.setVisibility(VISIBLE);
+        }
+
+        mClearableEditText.hideKeyboard();
+        mClearableEditText.setText("");
+        mClearableEditText.setVisibility(GONE);
+        mCloseSearchButton.setVisibility(GONE);
+    }
+
+    private void setLeaveSearchAnimation() {
+        TransitionManager.beginDelayedTransition(this);
     }
 
     @Override
@@ -350,11 +530,28 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         } else if (mLeftImageButton != null && v == mLeftImageButton &&
                 mLeftButtonClickListener != null) {
             mLeftButtonClickListener.onClick(v);
-        } else if (mRightButton != null && v == mRightButton && mRightButtonClickListener != null) {
-            mRightButtonClickListener.onClick(v);
-        } else if (mRightImageButton != null && v == mRightImageButton &&
-                mRightButtonClickListener != null) {
-            mRightButtonClickListener.onClick(v);
+        } else if (mRightButton != null && v == mRightButton) {
+            if (mRightButtonClickListener != null) {
+                mRightButtonClickListener.onClick(v);
+            }
+            if (mRightButtonAsSearchView) {
+                if (mClearableEditText.getVisibility() == VISIBLE) {
+                    hideSearchView();
+                } else {
+                    showSearchView();
+                }
+            }
+        } else if (mRightImageButton != null && v == mRightImageButton) {
+            if (mRightButtonClickListener != null) {
+                mRightButtonClickListener.onClick(v);
+            }
+            if (mRightButtonAsSearchView) {
+                if (mClearableEditText.getVisibility() == VISIBLE) {
+                    hideSearchView();
+                } else {
+                    showSearchView();
+                }
+            }
         }
     }
 
@@ -367,6 +564,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
     }
 
     public void showLeftButton() {
+        mIsLeftButtonShown = true;
         if (mLeftButton != null) {
             mLeftButton.setVisibility(VISIBLE);
         }
@@ -375,7 +573,10 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         }
     }
 
+    private boolean mIsLeftButtonShown = true;
+
     public void hideLeftButton() {
+        mIsLeftButtonShown = false;
         if (mLeftButton != null) {
             mLeftButton.setVisibility(GONE);
         }
@@ -389,7 +590,10 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
                 (mLeftImageButton != null && mLeftImageButton.getVisibility() == VISIBLE);
     }
 
+    private boolean mIsRightButtonShown = true;
+
     public void showRightButton() {
+        mIsRightButtonShown = true;
         if (mRightButton != null) {
             mRightButton.setVisibility(VISIBLE);
         }
@@ -399,6 +603,7 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
     }
 
     public void hideRightButton() {
+        mIsRightButtonShown = false;
         if (mRightButton != null) {
             mRightButton.setVisibility(GONE);
         }
@@ -453,5 +658,34 @@ public class CenterTitleSideButtonBar extends RelativeLayout implements View.OnC
         if (mRightImageButton != null) {
             mRightImageButton.setEnabled(false);
         }
+    }
+
+    public Observable<CharSequence> searchQueryChanges() {
+        if (mClearableEditText == null) {
+            throw new IllegalStateException("No search view configured!");
+        }
+        return mClearableEditText.textChanges();
+    }
+
+    public Observable<Integer> editorActions() {
+        if (mClearableEditText == null) {
+            throw new IllegalStateException("No search view configured!");
+        }
+        return mClearableEditText.editorActions();
+    }
+
+    public void setOnQueryChangedListener(OnTextChangedListener onQueryChangedListener) {
+        if (mClearableEditText == null) {
+            throw new IllegalStateException("No search view configured!");
+        }
+        mClearableEditText.setOnTextChangedListener(onQueryChangedListener);
+    }
+
+    public void setOnEditorActionDoneListener(
+            OnEditorActionDoneListener onEditorActionDoneListener) {
+        if (mClearableEditText == null) {
+            throw new IllegalStateException("No search view configured!");
+        }
+        mClearableEditText.setOnEditorActionDoneListener(onEditorActionDoneListener);
     }
 }

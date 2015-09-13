@@ -93,6 +93,70 @@ Allow fully customization against the title bar. No more Google/StackOverFlow se
             }
         });
     ```
+  +  Search bar support  
+  declare in layout
+  ```xml
+    <com.github.piasy.handywidgets.centertitlesidebuttonbar.CenterTitleSideButtonBar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mTitleBarSearch"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/holo_green_light"
+        app:hasRightButton="true"
+        app:rightButtonId="@+id/mTitleBar3RightButton"
+        app:rightButtonShownDefault="true"
+        app:rightButtonSrc="@drawable/iv_search"
+        app:rightButtonBg="@drawable/btn_back_bg_selector"
+        app:hasTitle="true"
+        app:centerTitleTextColor="@android:color/white"
+        app:centerTitle="Title 3"
+        app:centerTitleTextGravity="left"
+        app:centerTitleTextSize="20sp"
+        app:hasDivider="true"
+        app:dividerHeight="1dp"
+        app:dividerColor="#19FFFFFF"
+    
+        app:rightButtonAsSearchView="true"
+        app:searchViewBg="@drawable/round_corner_bg2"
+        app:searchViewHeight="28dp"
+        app:searchViewMarginLeft="8dp"
+        app:hasIcon="true"
+        app:iconRes="@drawable/iv_search_grey"
+        app:iconMarginLeft="10dp"
+        app:iconMarginRight="3dp"
+        app:editTextSize="14sp"
+        app:clearableEditTextColor="#000000"
+        app:clearableEditTextHintColor="#777777"
+        app:editTextHintContent="@string/text_search"
+        app:clearIconRes="@drawable/clear_edit_selector"
+        app:clearIconMarginLeft="10dp"
+        app:clearIconMarginRight="0dp"
+        app:editTextAutoFocus="true"
+        app:closeSearchViewId="@+id/mCloseSearchViewButton"
+        app:closeSearchViewText="@string/text_cancel"
+        app:closeSearchViewTextColor="@drawable/white_text_selector"
+        app:closeSearchViewTextSize="18sp"
+        />
+  ```  
+  use in code
+  ```java
+    mTitleBarSearch.searchQueryChanges()
+            .compose(this.<CharSequence>bindToLifecycle())
+            .subscribe(new Action1<CharSequence>() {
+                @Override
+                public void call(CharSequence query) {
+                    mTvSearchQuery.setText("Search Query: " + query);
+                }
+            });
+    mTitleBarSearch.setOnEditorActionDoneListener(new OnEditorActionDoneListener() {
+        @Override
+        public void onEditorActionDone() {
+            mTvEditorAction.setText("ACTION_DONE detected!");
+        }
+    });
+  ```
   +  Full example could be found at [the app module](../app/)
 
 +  Customization
@@ -109,7 +173,7 @@ Allow fully customization against the title bar. No more Google/StackOverFlow se
   +  and more...
 +  Todo
   +  shadow/elevation
-  +  search bar
+  +  ~~search bar~~
   +  multi buttons at one side
 +  Acknowledgement  
 Thanks for the improvement of [promeG](https://github.com/promeG/).

@@ -35,7 +35,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.androidSupportSdkVersion
     compile project(":centertitlesidebuttonbar")
     compile project(":endlessmovingview")
-    compile project(":clearableedittext")
 
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.trello:rxlifecycle:0.3.0'
+    compile 'com.trello:rxlifecycle-components:0.3.0'
 }
