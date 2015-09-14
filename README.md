@@ -6,7 +6,7 @@ Handy Android widgets.
 Title bar with center title TextView, side(left & right) button and bottom divider.  
 Allow fully customization against the title bar. No more Google/StackOverFlow search for customize ActionBar/Toolbar again!
 +  Screenshot  
-![Screenshot_centertitlesidebuttonbar.jpg](art/Screenshot_centertitlesidebuttonbar.jpg)
+![center_title_side_button_bar.gif](art/center_title_side_button_bar.gif)
 +  Download
 ```groovy
     repositories {
