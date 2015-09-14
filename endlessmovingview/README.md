@@ -1,5 +1,5 @@
 #EndlessMovingView
-[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-HandyWidgets-green.svg?style=flat)](https://android-arsenal.com/details/1/2455)
+[ ![Download](https://api.bintray.com/packages/piasy/maven/HandyWidgets/images/download.svg) ](https://bintray.com/piasy/maven/HandyWidgets/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-HandyWidgets-green.svg?style=flat)](https://android-arsenal.com/details/1/2455)  
 A handy view that support endless moving a drawable(image, xml drawable), or a custom figure recorded in a [Path](http://developer.android.com/reference/android/graphics/Path.html).  
 An endless moving view is a period graph, it repeat its single period to fill the view, and shifting towards the direction with the speed configured.
 

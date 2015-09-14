@@ -24,7 +24,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            debuggable true
+            debuggable false
             signingConfig signingConfigs.develop
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -35,6 +35,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.androidSupportSdkVersion
     compile project(":centertitlesidebuttonbar")
     compile project(":endlessmovingview")
+    /*compile "com.github.piasy:centertitlesidebuttonbar:${rootProject.ext.releaseVersionName}"
+    compile "com.github.piasy:clearableedittext:${rootProject.ext.releaseVersionName}"
+    compile "com.github.piasy:endlessmovingview:${rootProject.ext.releaseVersionName}"*/
 
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.trello:rxlifecycle:0.3.0'
