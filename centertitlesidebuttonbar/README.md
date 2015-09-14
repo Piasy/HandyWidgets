@@ -174,6 +174,7 @@ Allow fully customization against the title bar. No more Google/StackOverFlow se
 +  Todo
   +  shadow/elevation
   +  ~~search bar~~
+  +  trainsition customization support
   +  multi buttons at one side
 +  Acknowledgement  
 Thanks for the improvement of [promeG](https://github.com/promeG/).
