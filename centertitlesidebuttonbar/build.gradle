@@ -21,7 +21,8 @@ android {
 
 dependencies {
     compile "com.android.support:support-annotations:${rootProject.ext.androidSupportSdkVersion}"
-    //compile "com.github.piasy:clearableedittext:${rootProject.ext.releaseVersionName}"
-    compile project(':clearableedittext')
+    compile ("com.github.piasy:clearableedittext:${rootProject.ext.releaseVersionName}") {
+        exclude module: 'support-annotations'
+    }
     compile "com.andkulikov:transitionseverywhere:1.6.0"
 }
