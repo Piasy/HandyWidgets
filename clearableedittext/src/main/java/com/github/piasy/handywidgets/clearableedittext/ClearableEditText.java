@@ -63,6 +63,7 @@ public final class ClearableEditText extends LinearLayout {
     private final boolean mIsEditTextAutoFocus;
     private final EditText mEditText;
     private final ImageButton mClearButton;
+    private boolean mHasVisibilitySwitch = false;
     private final CheckBox mCheckBox;
 
     private OnTextChangedListener mOnTextChangedListener;
@@ -70,8 +71,6 @@ public final class ClearableEditText extends LinearLayout {
     private boolean mIsEditorActionsMonitored = false;
     private OnEditorActionDoneListener mOnEditorActionDoneListener;
     private Subscription mEditorActionsSubscription;
-
-    private final boolean mIsPassword;
 
     public ClearableEditText(Context context) {
         this(context, null);
@@ -104,7 +103,6 @@ public final class ClearableEditText extends LinearLayout {
         float editTextSize = a.getDimension(R.styleable.ClearableEditText_editTextSize, 20);
         mIsEditTextAutoFocus = a.getBoolean(R.styleable.ClearableEditText_editTextAutoFocus, true);
         int inputType = getInputType(context, attrs);
-        mIsPassword = a.getBoolean(R.styleable.ClearableEditText_isPassword, false);
         int editTextBg =
                 a.getResourceId(R.styleable.ClearableEditText_clearableEditTextBackground, 0);
 
@@ -116,8 +114,8 @@ public final class ClearableEditText extends LinearLayout {
                 a.getDimensionPixelSize(R.styleable.ClearableEditText_clearIconMarginRight,
                         dip2px(10, context));
 
-        boolean hasVisibilitySwitch =
-                a.getBoolean(R.styleable.ClearableEditText_hasVisibilitySwitch, false);
+        mHasVisibilitySwitch
+                = a.getBoolean(R.styleable.ClearableEditText_hasVisibilitySwitch, false);
         int visibilitySwitchMarginRight =
                 a.getDimensionPixelSize(R.styleable.ClearableEditText_visibilitySwitchMarginRight,
                         dip2px(10, context));
@@ -176,7 +174,7 @@ public final class ClearableEditText extends LinearLayout {
         addView(mClearButton);
         mClearButton.setVisibility(INVISIBLE);
 
-        if (hasVisibilitySwitch) {
+        if (mHasVisibilitySwitch) {
             mCheckBox = new CheckBox(context);
             mCheckBox.setButtonDrawable(0);
             mCheckBox.setBackgroundResource(visibilitySwitchBg);
@@ -200,7 +198,7 @@ public final class ClearableEditText extends LinearLayout {
     }
 
     private void initListener() {
-        if (mIsPassword && mCheckBox != null) {
+        if (mHasVisibilitySwitch && mCheckBox != null) {
             mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
