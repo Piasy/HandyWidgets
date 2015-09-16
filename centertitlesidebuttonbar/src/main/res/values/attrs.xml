@@ -53,6 +53,7 @@
         <attr name="rightButtonBg" format="reference"/>
 
         <attr name="rightButtonAsSearchView" format="boolean"/>
+        <attr name="rightButtonClickToSearch" format="boolean"/>
         <attr name="searchViewDefaultShown" format="boolean"/>
         <attr name="searchViewBg" format="reference"/>
         <attr name="searchViewHeight" format="dimension"/>
