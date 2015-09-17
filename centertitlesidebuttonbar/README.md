@@ -119,6 +119,7 @@ Allow fully customization against the title bar. No more Google/StackOverFlow se
         app:dividerColor="#19FFFFFF"
     
         app:rightButtonAsSearchView="true"
+        app:rightButtonClickToSearch="true"
         app:searchViewBg="@drawable/round_corner_bg2"
         app:searchViewHeight="28dp"
         app:searchViewMarginLeft="8dp"

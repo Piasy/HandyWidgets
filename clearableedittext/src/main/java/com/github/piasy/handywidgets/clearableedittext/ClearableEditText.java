@@ -176,7 +176,7 @@ public final class ClearableEditText extends LinearLayout {
 
         if (mHasVisibilitySwitch) {
             mCheckBox = new CheckBox(context);
-            mCheckBox.setButtonDrawable(0);
+            mCheckBox.setButtonDrawable(R.color.clearable_edit_text_transparent);
             mCheckBox.setBackgroundResource(visibilitySwitchBg);
             LayoutParams params3 = new LayoutParams(visibilitySwitchWidth, visibilitySwitchHeight);
             params3.rightMargin = visibilitySwitchMarginRight;

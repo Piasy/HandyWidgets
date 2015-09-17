@@ -24,10 +24,19 @@
 
 package com.github.piasy.handywidgets.centertitlesidebuttonbar;
 
+import com.github.piasy.handywidgets.clearableedittext.ClearableEditText;
+import com.github.piasy.handywidgets.clearableedittext.OnEditorActionDoneListener;
+import com.github.piasy.handywidgets.clearableedittext.OnTextChangedListener;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.Slide;
+import com.transitionseverywhere.TransitionManager;
+import com.transitionseverywhere.TransitionSet;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.os.Looper;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -40,81 +49,132 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.github.piasy.handywidgets.clearableedittext.ClearableEditText;
-import com.github.piasy.handywidgets.clearableedittext.OnEditorActionDoneListener;
-import com.github.piasy.handywidgets.clearableedittext.OnTextChangedListener;
-import com.transitionseverywhere.Fade;
-import com.transitionseverywhere.Slide;
-import com.transitionseverywhere.TransitionManager;
-import com.transitionseverywhere.TransitionSet;
+
 import rx.Observable;
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.subscriptions.Subscriptions;
 
 /**
  * Created by Piasy{github.com/Piasy} on 15/8/27.
  */
 public final class CenterTitleSideButtonBar extends RelativeLayout implements View.OnClickListener {
+
     private int mLayoutHeight = 44;
+
     private boolean mHasLeftButton = false;
+
     private int mLeftButtonId = -1;
+
     private boolean mLeftButtonShownDefault = true;
+
     private boolean mLeftButtonAsText = false;
+
     private String mLeftButtonText = "Left";
+
     private ColorStateList mLeftButtonTextColor = null;
+
     private int mLeftButtonTextSize = 20;
+
     private
     @DrawableRes
     int mLeftButtonSrc = 0;
+
     private
     @DrawableRes
     int mLeftButtonBg = 0;
+
     private boolean mHasRightButton = false;
+
     private int mRightButtonId = -1;
+
     private boolean mRightButtonShownDefault = false;
+
     private boolean mRightButtonAsText = false;
+
     private String mRightButtonText = "Right";
+
     private ColorStateList mRightButtonTextColor = null;
+
     private int mRightButtonTextSize = 20;
+
     private
     @DrawableRes
     int mRightButtonSrc = 0;
+
     private
     @DrawableRes
     int mRightButtonBg = 0;
+
     private int mCloseSearchViewId = -1;
+
     private boolean mRightButtonAsSearchView = false;
+
+    private boolean mRightButtonClickToSearch = true;
+
     private boolean mSearchViewDefaultShown = false;
+
     private
     @DrawableRes
     int mSearchViewBg = 0;
+
     private int mSearchViewHeight = ViewGroup.LayoutParams.MATCH_PARENT;
+
     private int mSearchViewMarginLeft = 0;
+
     private int mSearchViewMarginRight = 0;
+
     private String mCloseSearchViewText = "";
+
     private ColorStateList mCloseSearchViewTextColor;
+
     private int mCloseSearchViewTextSize = 20;
+
     private boolean mHasTitle = true;
+
     private int mTitleId = -1;
+
     private String mTitle = "";
+
     private
     @ColorInt
     int mTitleColor = 0xFF333333;
+
     private int mTitleSize = 20;
+
     private int mTitleGravity = 0;
+
     private boolean mHasDivider = false;
+
     private int mDividerId = -1;
+
     private int mDividerHeight = 2;
+
     private
     @ColorInt
     int mDividerColor = 0x19FFFFFF;
+
     private ImageButton mLeftImageButton = null;
+
     private Button mLeftButton = null;
+
     private ImageButton mRightImageButton = null;
+
     private Button mRightButton = null;
+
     private TextView mTitleTextView = null;
+
     private ClearableEditText mClearableEditText;
+
     private Button mCloseSearchButton;
+
     private View mDivider = null;
+
     private OnClickListener mLeftButtonClickListener;
+
     private OnClickListener mRightButtonClickListener;
 
     public CenterTitleSideButtonBar(@NonNull Context context) {
@@ -134,7 +194,7 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
     }
 
     private void getLayoutAttrs(@NonNull Context context, AttributeSet attrs) {
-        int[] systemAttrs = { android.R.attr.layout_height };
+        int[] systemAttrs = {android.R.attr.layout_height};
         TypedArray a = context.obtainStyledAttributes(attrs, systemAttrs);
         mLayoutHeight = a.getDimensionPixelSize(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         a.recycle();
@@ -174,6 +234,8 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
         mRightButtonBg = a.getResourceId(R.styleable.CenterTitleSideButtonBar_rightButtonBg, 0);
         mRightButtonAsSearchView =
                 a.getBoolean(R.styleable.CenterTitleSideButtonBar_rightButtonAsSearchView, false);
+        mRightButtonClickToSearch = a
+                .getBoolean(R.styleable.CenterTitleSideButtonBar_rightButtonClickToSearch, true);
         if (mRightButtonAsSearchView) {
             mCloseSearchViewId =
                     a.getResourceId(R.styleable.CenterTitleSideButtonBar_closeSearchViewId, -1);
@@ -460,6 +522,9 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
         mClearableEditText.showKeyboard();
         mClearableEditText.setVisibility(VISIBLE);
         mCloseSearchButton.setVisibility(VISIBLE);
+        if (mSearchViewVisibilityChangedListener != null) {
+            mSearchViewVisibilityChangedListener.onSearchViewShown();
+        }
     }
 
     private void setEnterSearchAnimation() {
@@ -517,10 +582,94 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
         mClearableEditText.setText("");
         mClearableEditText.setVisibility(GONE);
         mCloseSearchButton.setVisibility(GONE);
+        if (mSearchViewVisibilityChangedListener != null) {
+            mSearchViewVisibilityChangedListener.onSearchViewHidden();
+        }
     }
 
     private void setLeaveSearchAnimation() {
         TransitionManager.beginDelayedTransition(this);
+    }
+
+    /**
+     * Listener to get notified when search view's visibility changed.
+     * */
+    public interface SearchViewVisibilityChangedListener {
+
+        /**
+         * search view is shown.
+         * */
+        void onSearchViewShown();
+
+        /**
+         * search view is hidden.
+         * */
+        void onSearchViewHidden();
+    }
+
+    private SearchViewVisibilityChangedListener mSearchViewVisibilityChangedListener;
+
+    /**
+     * set listener to get notified when search view's visibility changed.
+     *
+     * @param listener SearchViewVisibilityChangedListener
+     * */
+    public void setSearchViewVisibilityChangedListener(
+            SearchViewVisibilityChangedListener listener) {
+        mSearchViewVisibilityChangedListener = listener;
+    }
+
+    /**
+     * get notified with the popular rx way.
+     *
+     * @return the rx Observable that notify search view visibility change, emit {@code true}
+     * when search view is shown, emit {@code false} when search view is hidden.
+     * */
+    public Observable<Boolean> searchViewVisibilityChanged() {
+        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(final Subscriber<? super Boolean> subscriber) {
+                mSearchViewVisibilityChangedListener = new SearchViewVisibilityChangedListener() {
+                    @Override
+                    public void onSearchViewShown() {
+                        subscriber.onNext(true);
+                    }
+
+                    @Override
+                    public void onSearchViewHidden() {
+                        subscriber.onNext(false);
+                    }
+                };
+
+                subscriber.add(unsubscribeInUiThread(new Action0() {
+                    @Override
+                    public void call() {
+                        mSearchViewVisibilityChangedListener = null;
+                    }
+                }));
+            }
+        });
+    }
+
+    private Subscription unsubscribeInUiThread(final Action0 unsubscribe) {
+        return Subscriptions.create(new Action0() {
+
+            @Override
+            public void call() {
+                if (Looper.getMainLooper() == Looper.myLooper()) {
+                    unsubscribe.call();
+                } else {
+                    final Scheduler.Worker inner = AndroidSchedulers.mainThread().createWorker();
+                    inner.schedule(new Action0() {
+                        @Override
+                        public void call() {
+                            unsubscribe.call();
+                            inner.unsubscribe();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
@@ -534,7 +683,7 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
             if (mRightButtonClickListener != null) {
                 mRightButtonClickListener.onClick(v);
             }
-            if (mRightButtonAsSearchView) {
+            if (mRightButtonAsSearchView && mRightButtonClickToSearch) {
                 if (mClearableEditText.getVisibility() == VISIBLE) {
                     hideSearchView();
                 } else {
@@ -545,7 +694,7 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
             if (mRightButtonClickListener != null) {
                 mRightButtonClickListener.onClick(v);
             }
-            if (mRightButtonAsSearchView) {
+            if (mRightButtonAsSearchView && mRightButtonClickToSearch) {
                 if (mClearableEditText.getVisibility() == VISIBLE) {
                     hideSearchView();
                 } else {
