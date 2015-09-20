@@ -24,6 +24,8 @@
 
 package com.github.piasy.handywidgets.clearableedittext;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.CheckResult;
@@ -37,6 +39,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -47,7 +50,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import com.jakewharton.rxbinding.widget.RxTextView;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -61,15 +64,23 @@ import rx.Subscription;
 public final class ClearableEditText extends LinearLayout {
 
     private final boolean mIsEditTextAutoFocus;
+
     private final EditText mEditText;
+
     private final ImageButton mClearButton;
+
     private boolean mHasVisibilitySwitch = false;
+
     private final CheckBox mCheckBox;
 
     private OnTextChangedListener mOnTextChangedListener;
+
     private Subscription mOnTextChangedSubscription;
+
     private boolean mIsEditorActionsMonitored = false;
+
     private OnEditorActionDoneListener mOnEditorActionDoneListener;
+
     private Subscription mEditorActionsSubscription;
 
     public ClearableEditText(Context context) {
@@ -142,7 +153,9 @@ public final class ClearableEditText extends LinearLayout {
             addView(searchIcon);
         }
 
-        mEditText = new EditText(context);
+        // to set `android:textCursorDrawable="@null"`
+        mEditText = (EditText) LayoutInflater.from(context)
+                .inflate(R.layout.ui_clearable_edit_text_edit_text, this, false);
         mEditText.setGravity(Gravity.CENTER_VERTICAL);
         mEditText.setPadding(0, 0, 0, 0);
         mEditText.setSingleLine();
@@ -190,7 +203,7 @@ public final class ClearableEditText extends LinearLayout {
     }
 
     private int getInputType(@NonNull Context context, @NonNull AttributeSet attrs) {
-        int[] systemAttrs = { android.R.attr.inputType };
+        int[] systemAttrs = {android.R.attr.inputType};
         TypedArray a = context.obtainStyledAttributes(attrs, systemAttrs);
         int inputType = a.getInt(0, EditorInfo.TYPE_NULL);
         a.recycle();
@@ -352,10 +365,12 @@ public final class ClearableEditText extends LinearLayout {
         mOnTextChangedListener = onTextChangedListener;
         mOnTextChangedSubscription = textChanges().subscribe(new Subscriber<CharSequence>() {
             @Override
-            public void onCompleted() { }
+            public void onCompleted() {
+            }
 
             @Override
-            public void onError(Throwable e) { }
+            public void onError(Throwable e) {
+            }
 
             @Override
             public void onNext(CharSequence charSequence) {
@@ -381,7 +396,7 @@ public final class ClearableEditText extends LinearLayout {
      * #onDetachedFromWindow()} is called. And it's free to set this listener/get Observable again.
      *
      * @param onEditorActionDoneListener the listener to get notified when the {@link
-     * EditorInfo#IME_ACTION_DONE} happen.
+     *                                   EditorInfo#IME_ACTION_DONE} happen.
      */
     public void setOnEditorActionDoneListener(
             final OnEditorActionDoneListener onEditorActionDoneListener) {
@@ -392,10 +407,12 @@ public final class ClearableEditText extends LinearLayout {
             mEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
             mEditorActionsSubscription = editorActions().subscribe(new Subscriber<Integer>() {
                 @Override
-                public void onCompleted() { }
+                public void onCompleted() {
+                }
 
                 @Override
-                public void onError(Throwable e) { }
+                public void onError(Throwable e) {
+                }
 
                 @Override
                 public void onNext(Integer code) {
