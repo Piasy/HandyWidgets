@@ -29,6 +29,8 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.CheckResult;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.Editable;
@@ -512,5 +514,9 @@ public final class ClearableEditText extends LinearLayout {
      */
     public void setFilters(@NonNull InputFilter[] filters) {
         mEditText.setFilters(filters);
+    }
+
+    public void setTextColor(@ColorInt int color) {
+        mEditText.setTextColor(color);
     }
 }
