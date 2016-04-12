@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
+import static butterknife.ButterKnife.findById;
 import com.github.piasy.handywidgets.clearableedittext.ClearableEditText;
 import com.github.piasy.handywidgets.clearableedittext.OnEditorActionDoneListener;
 import com.github.piasy.handywidgets.clearableedittext.OnTextChangedListener;

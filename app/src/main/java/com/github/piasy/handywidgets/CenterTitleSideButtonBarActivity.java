@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
+import static butterknife.ButterKnife.findById;
 import com.github.piasy.handywidgets.centertitlesidebuttonbar.CenterTitleSideButtonBar;
 import com.github.piasy.handywidgets.clearableedittext.OnEditorActionDoneListener;
 import com.trello.rxlifecycle.components.RxActivity;

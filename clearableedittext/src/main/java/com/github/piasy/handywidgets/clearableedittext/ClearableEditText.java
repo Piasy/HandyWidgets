@@ -30,7 +30,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.Editable;
@@ -518,5 +517,13 @@ public final class ClearableEditText extends LinearLayout {
 
     public void setTextColor(@ColorInt int color) {
         mEditText.setTextColor(color);
+    }
+
+    /**
+     * set selection for edit text
+     * @param position select position
+     */
+    public void setSelection(int position) {
+        mEditText.setSelection(position);
     }
 }
