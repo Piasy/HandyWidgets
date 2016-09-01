@@ -25,5 +25,5 @@ dependencies {
         exclude module: 'support-annotations'
     }
     compile "com.andkulikov:transitionseverywhere:1.6.0"
-    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxandroid:1.2.1'
 }
