@@ -27,7 +27,7 @@
             app:hasTitle="true"
             app:titleId="@+id/mTitleBarTitle"
             app:centerTitleTextColor="@android:color/white"
-            app:centerTitle="Title 1"
+            app:centerTitle="TitleAnnotate fields with and a view ID for Butter Knife to find and automatically cast the corresponding view in your layout."
             app:centerTitleTextGravity="center"
             app:centerTitleTextSize="20sp"
             app:hasDivider="true"

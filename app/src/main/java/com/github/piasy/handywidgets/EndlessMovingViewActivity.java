@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import static butterknife.ButterKnife.findById;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.github.piasy.handywidgets.endlessmovingview.EndlessMovingView;
 
 /**
@@ -23,13 +23,13 @@ public class EndlessMovingViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @Bind(R.id.mEndlessMovingViewLeft)
+    @BindView(R.id.mEndlessMovingViewLeft)
     EndlessMovingView mEndlessMovingViewLeft;
-    @Bind(R.id.mEndlessMovingViewRight)
+    @BindView(R.id.mEndlessMovingViewRight)
     EndlessMovingView mEndlessMovingViewRight;
-    @Bind(R.id.mEndlessMovingViewUp)
+    @BindView(R.id.mEndlessMovingViewUp)
     EndlessMovingView mEndlessMovingViewUp;
-    @Bind(R.id.mEndlessMovingViewDown)
+    @BindView(R.id.mEndlessMovingViewDown)
     EndlessMovingView mEndlessMovingViewDown;
 
     @OnClick({
