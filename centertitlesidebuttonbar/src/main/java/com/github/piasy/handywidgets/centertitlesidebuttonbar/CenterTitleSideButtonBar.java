@@ -386,7 +386,7 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
         if (mHasTitle) {
             mTitleTextView = new TextView(context);
             mTitleTextView.setId(mTitleId);
-            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             if (mLeftImageButton != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
