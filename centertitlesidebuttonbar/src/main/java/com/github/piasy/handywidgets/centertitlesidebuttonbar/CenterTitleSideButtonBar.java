@@ -40,6 +40,7 @@ import android.os.Looper;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -433,6 +434,9 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
             } else {
                 mTitleTextView.setGravity(Gravity.CENTER);
             }
+
+            mTitleTextView.setMaxLines(1);
+            mTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
 
             addView(mTitleTextView);
         }

@@ -3,9 +3,9 @@ package com.github.piasy.handywidgets;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import static butterknife.ButterKnife.findById;
 
-import com.github.piasy.handywidgets.clearableedittext.ClearableEditText;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Piasy{github.com/Piasy} on 15/9/1.

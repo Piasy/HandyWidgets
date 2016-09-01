@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-import static butterknife.ButterKnife.findById;
 import com.github.piasy.handywidgets.clearableedittext.ClearableEditText;
 import com.github.piasy.handywidgets.clearableedittext.OnEditorActionDoneListener;
 import com.github.piasy.handywidgets.clearableedittext.OnTextChangedListener;
 import com.trello.rxlifecycle.components.RxActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 /**
@@ -17,16 +19,16 @@ import rx.functions.Action1;
  */
 public class ClearableEditTextActivity extends RxActivity {
 
-    @Bind(R.id.mEtUsername)
+    @BindView(R.id.mEtUsername)
     ClearableEditText mEtUsername;
-    @Bind(R.id.mEtPassword)
+    @BindView(R.id.mEtPassword)
     ClearableEditText mEtPassword;
 
-    @Bind(R.id.mTvInputUsername)
+    @BindView(R.id.mTvInputUsername)
     TextView mTvInputUsername;
-    @Bind(R.id.mTvInputPassword)
+    @BindView(R.id.mTvInputPassword)
     TextView mTvInputPassword;
-    @Bind(R.id.mTvAction)
+    @BindView(R.id.mTvAction)
     TextView mTvAction;
 
     @Override

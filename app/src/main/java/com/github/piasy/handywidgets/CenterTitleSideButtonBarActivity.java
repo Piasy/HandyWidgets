@@ -5,23 +5,25 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static butterknife.ButterKnife.findById;
 import com.github.piasy.handywidgets.centertitlesidebuttonbar.CenterTitleSideButtonBar;
 import com.github.piasy.handywidgets.clearableedittext.OnEditorActionDoneListener;
 import com.trello.rxlifecycle.components.RxActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 public class CenterTitleSideButtonBarActivity extends RxActivity {
 
-    @Bind(R.id.mTitleBarFull)
+    @BindView(R.id.mTitleBarFull)
     CenterTitleSideButtonBar mTitleBarFull;
-    @Bind(R.id.mTitleBarDefaultHideRightButtonTitleGravityLeft)
+    @BindView(R.id.mTitleBarDefaultHideRightButtonTitleGravityLeft)
     CenterTitleSideButtonBar mTitleBarDefaultHideRightButtonTitleGravityLeft;
-    @Bind(R.id.mTitleBarSearch)
+    @BindView(R.id.mTitleBarSearch)
     CenterTitleSideButtonBar mTitleBarSearch;
-    @Bind(R.id.mTvSearchQuery)
+    @BindView(R.id.mTvSearchQuery)
     TextView mTvSearchQuery;
-    @Bind(R.id.mTvEditorAction)
+    @BindView(R.id.mTvEditorAction)
     TextView mTvEditorAction;
 
     @Override
