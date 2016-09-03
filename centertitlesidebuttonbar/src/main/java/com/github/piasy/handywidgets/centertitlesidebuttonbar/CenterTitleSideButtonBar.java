@@ -436,7 +436,7 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
             }
 
             mTitleTextView.setMaxLines(1);
-            mTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
+            mTitleTextView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
 
             addView(mTitleTextView);
         }
