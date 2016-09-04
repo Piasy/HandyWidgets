@@ -148,6 +148,8 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
 
     private int mTitleGravity = 0;
 
+    private int mTitleEllipsize = 0;
+
     private boolean mHasDivider = false;
 
     private int mDividerId = -1;
@@ -268,6 +270,8 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
                 (int) a.getDimension(R.styleable.CenterTitleSideButtonBar_centerTitleTextSize, 20);
         mTitleGravity =
                 a.getInteger(R.styleable.CenterTitleSideButtonBar_centerTitleTextGravity, 0);
+        mTitleEllipsize =
+                a.getInteger(R.styleable.CenterTitleSideButtonBar_centerTitleEllipsize, 0);
 
         mHasDivider = a.getBoolean(R.styleable.CenterTitleSideButtonBar_hasDivider, false);
         mDividerId = a.getResourceId(R.styleable.CenterTitleSideButtonBar_dividerId, -1);
@@ -436,7 +440,20 @@ public final class CenterTitleSideButtonBar extends RelativeLayout implements Vi
             }
 
             mTitleTextView.setMaxLines(1);
-            mTitleTextView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+            switch (mTitleEllipsize) {
+                case 0:
+                    mTitleTextView.setEllipsize(TextUtils.TruncateAt.START);
+                    break;
+                case 1:
+                    mTitleTextView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+                    break;
+                case 2:
+                    mTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
+                    break;
+                case 3:
+                    mTitleTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                    break;
+            }
 
             addView(mTitleTextView);
         }
