@@ -43,6 +43,7 @@ Allow fully customization against the title bar. No more Google/StackOverFlow se
             ctsbb:centerTitle="Title 1"
             ctsbb:centerTitleTextGravity="center"
             ctsbb:centerTitleTextSize="10sp"
+            ctsbb:centerTitleEllipsize="end"
             ctsbb:hasDivider="true"
             ctsbb:dividerId="@+id/mTitleBarDivider"
             ctsbb:dividerHeight="1dp"
