@@ -27,7 +27,7 @@
             app:hasTitle="true"
             app:titleId="@+id/mTitleBarTitle"
             app:centerTitleTextColor="@android:color/white"
-            app:centerTitle="TitleAnnotate fields with and a view ID for Butter Knife to find and automatically cast the corresponding view in your layout."
+            app:centerTitle="手机13391812653。。。。。。？？？？？？？？？？？？？！！！！！！！！！！！！！"
             app:centerTitleTextGravity="center"
             app:centerTitleEllipsize="middle"
             app:centerTitleTextSize="20sp"
@@ -139,5 +139,24 @@
             android:layout_marginTop="10dp"
             android:textColor="@android:color/white"
             android:textSize="14sp"
+            />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="手机13391812653。。。。。。？？？？？？？？？？？？？！！！！！！！！！！！！！"
+            />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:text="手机13391812653。。。。。。？？？？？？？？？？？？？！！！！！！！！！！！！！"
             />
 </LinearLayout>
